@@ -15,3 +15,7 @@ bouwen. Dit proces kan deels geautomatiseerd worden met bestaande modellen, zoal
 gebruikmakend van Python en PyTorch.
 - **Dashboard**: Ontwikkel een uitgebreid dashboard met Plotly Dash, waarin gebruikers de resultaten kunnen bekijken en navigeren. Zorg voor een interactieve en gebruiksvriendelijke interface.
 - **Deployment op mini-PC**: Zorg dat het volledige systeem offline werkt en stand-alone kan draaien op een mini-PC met een Linux-besturingssysteem, geschikt voor gebruik tijdens open dagen en evenementen
+
+## Dataset
+
+https://download.vlaanderen.be/product/9531 
