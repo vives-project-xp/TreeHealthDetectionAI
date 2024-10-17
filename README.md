@@ -18,4 +18,16 @@ gebruikmakend van Python en PyTorch.
 
 ## Dataset
 
-https://download.vlaanderen.be/product/9531 
+[Vlaanderen.be](https://download.vlaanderen.be/product/9531) 
+
+## Concept
+
+- Dataset van [vlaanderen.be](#dataset) gebruiken voor AI-training om bomen te detecteren en gezondheid te beoordelen.
+- GDAL2Tiles wordt gebruik om jp2-bestanden te converteren naar kleinere png-bestanden.
+- AI-training via Detectree2 library en de png-bestanden.
+- Dashboard ontwikkelen in Python met Dash en Dash-Leaflet.
+- png-bestanden als tiles inzetten op het dashboard.
+- Dashboard toont:
+  - RGB-kaart
+  - Infraroodkaart
+  - Kaart met AI-resultaten.
