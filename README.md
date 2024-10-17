@@ -30,4 +30,4 @@ gebruikmakend van Python en PyTorch.
 - Dashboard toont:
   - RGB-kaart
   - Infraroodkaart
-  - Kaart met AI-resultaten.
+  - Kaart met AI-resultaten
