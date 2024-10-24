@@ -18,11 +18,13 @@ server = Flask(__name__)
 app = dash.Dash(__name__, server=server)
 
 # Route to RGB tiles
+# Change the path to the directory of your RGB tiles
 @server.route('/tiles/rgb/<int:z>/<int:x>/<int:y>.png')
 def serve_rgb_tile(z, x, y):
     return serve_tile(z, x, y, TILES_DIR)
 
 # Route to CIR tiles
+# Change the path to the directory of your CIR tiles
 @server.route('/tiles/cir/<int:z>/<int:x>/<int:y>.png')
 def serve_cir_tile(z, x, y):
     return serve_tile(z, x, y, CIR_TILES_DIR)
