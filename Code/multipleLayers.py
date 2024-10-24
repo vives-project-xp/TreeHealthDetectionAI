@@ -18,9 +18,6 @@ TC_PORT = 8050
 TC_HOST = 'localhost'
 
 
-gemeenteCoordinates = pd.read_csv('/home/vives/project-experience/gemeenteCoordinaten.csv')
-gemeenteCodes = pd.read_csv('/home/vives/project-experience/gemeenteCodes.csv')
-
 server = Flask(__name__)
 app = dash.Dash(__name__, server=server)
 
@@ -62,10 +59,6 @@ def serve_tile(z, x, y, tiles_dir):
 
 # Layout
 app.layout = html.Div(children=[
-    dcc.Dropdown(
-    [gemeenteCodes.iloc[i, 0] for i in range(len(gemeenteCodes))],
-    placeholder="Selecteer een gemeente",
-    ),
     dl.Map([
         dl.LayersControl(
             [
