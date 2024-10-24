@@ -6,25 +6,30 @@ import dash_leaflet as dl
 from dash.dependencies import Output, Input
 from flask import Flask, send_from_directory
 import os
+import pandas as pd
 
 # Configuration settings
-TILES_DIR = '/home/vives/project-experience/tiles'
-CIR_TILES_DIR = '/home/vives/project-experience/cir_tiles'
+# Change the path to the directory of your RGB tiles
+TILES_DIR = '/home/vives/project-experience/tiles/rgb'
+# Change the path to the directory of your CIR tiles
+CIR_TILES_DIR = '/home/vives/project-experience/tiles/cir'
 DEFAULT_TILE = '/home/vives/project-experience/tree_pattern.avif'
 TC_PORT = 8050
 TC_HOST = 'localhost'
+
+
+gemeenteCoordinates = pd.read_csv('/home/vives/project-experience/gemeenteCoordinaten.csv')
+gemeenteCodes = pd.read_csv('/home/vives/project-experience/gemeenteCodes.csv')
 
 server = Flask(__name__)
 app = dash.Dash(__name__, server=server)
 
 # Route to RGB tiles
-# Change the path to the directory of your RGB tiles
 @server.route('/tiles/rgb/<int:z>/<int:x>/<int:y>.png')
 def serve_rgb_tile(z, x, y):
     return serve_tile(z, x, y, TILES_DIR)
 
 # Route to CIR tiles
-# Change the path to the directory of your CIR tiles
 @server.route('/tiles/cir/<int:z>/<int:x>/<int:y>.png')
 def serve_cir_tile(z, x, y):
     return serve_tile(z, x, y, CIR_TILES_DIR)
@@ -57,6 +62,10 @@ def serve_tile(z, x, y, tiles_dir):
 
 # Layout
 app.layout = html.Div(children=[
+    dcc.Dropdown(
+    [gemeenteCodes.iloc[i, 0] for i in range(len(gemeenteCodes))],
+    placeholder="Selecteer een gemeente",
+    ),
     dl.Map([
         dl.LayersControl(
             [
