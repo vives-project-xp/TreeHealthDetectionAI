@@ -148,15 +148,6 @@ def main():
 
     project_to_geojson(tiles_path, tiles_path + "predictions/", tiles_path + "predictions_geo/")
 
-    crowns = stitch_crowns(tiles_path + "predictions_geo/", 1)
-    clean = clean_crowns(crowns, 0.6, confidence=0) 
-
-    clean = clean[clean["Confidence_score"] > 0.5]
-
-    clean = clean.set_geometry(clean.simplify(0.3))
-
-    clean.to_file(tiles_path + "/crowns_out.gpkg")
-
     print("Tis gelukt")
 
 if __name__ == "__main__":
