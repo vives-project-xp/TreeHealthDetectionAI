@@ -9,6 +9,12 @@ from detectree2.models.predict import predict_on_data
 from detectree2.models.train import setup_cfg
 from detectron2.engine import DefaultPredictor
 import pycocotools.mask as mask_util
+from pngTotif import convert_png_to_tif
+
+input_folder = "./Own_Tiles"
+output_folder = "./Own_Tiles"
+
+convert_png_to_tif(input_folder, output_folder)
 
 def check_directory_exists_and_list_files(dir_path):
     if os.path.exists(dir_path):

@@ -1,3 +1,7 @@
+#Folders
+/__pycache__
 /Own_Tiles
 /Test
+
+#Files
 230103_randresize_full.pth
