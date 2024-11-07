@@ -4,7 +4,7 @@ import rasterio
 from rasterio.crs import CRS
 from pathlib import Path
 import numpy as np
-from detectree2.models.outputs import polygon_from_mask
+from detectree2.models.outputs import polygon_from_mask,stitch_crowns, clean_crowns
 from detectree2.models.predict import predict_on_data
 from detectree2.models.train import setup_cfg
 from detectron2.engine import DefaultPredictor
@@ -137,6 +137,7 @@ def project_to_geojson(tiles_path, pred_fold=None, output_fold=None, multi_class
 
 def main():
     tiles_path = "/data/Own_Tiles/" 
+    result_path = "/data/Own_Tiles/result/" 
     check_directory_exists_and_list_files(tiles_path)
 
     trained_model = "./230103_randresize_full.pth"
@@ -146,6 +147,15 @@ def main():
     predict_on_data(tiles_path, predictor=DefaultPredictor(cfg))
 
     project_to_geojson(tiles_path, tiles_path + "predictions/", tiles_path + "predictions_geo/")
+
+    crowns = stitch_crowns(tiles_path + "predictions_geo/", 1)
+    clean = clean_crowns(crowns, 0.6, confidence=0) 
+
+    clean = clean[clean["Confidence_score"] > 0.5]
+
+    clean = clean.set_geometry(clean.simplify(0.3))
+
+    clean.to_file(tiles_path + "/crowns_out.gpkg")
 
     print("Tis gelukt")
 
