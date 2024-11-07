@@ -10,3 +10,6 @@
 
 ### Link to github: 
 https://github.com/PatBall1/detectree2 
+
+### Models:
+https://zenodo.org/records/12773341
