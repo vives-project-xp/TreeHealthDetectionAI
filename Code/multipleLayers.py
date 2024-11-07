@@ -14,7 +14,7 @@ TILES_DIR = '/home/vives/project-experience/tiles/rgb'
 # Change the path to the directory of your CIR tiles
 CIR_TILES_DIR = '/home/vives/project-experience/tiles/cir'
 DEFAULT_TILE = '/home/vives/project-experience/tree_pattern.avif'
-TC_PORT = 8051
+TC_PORT = 8050
 TC_HOST = 'localhost'
 
 
