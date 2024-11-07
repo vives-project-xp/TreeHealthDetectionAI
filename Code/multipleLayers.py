@@ -14,12 +14,11 @@ TILES_DIR = '/home/vives/project-experience/tiles/rgb'
 # Change the path to the directory of your CIR tiles
 CIR_TILES_DIR = '/home/vives/project-experience/tiles/cir'
 DEFAULT_TILE = '/home/vives/project-experience/tree_pattern.avif'
-TC_PORT = 8050
+TC_PORT = 8051
 TC_HOST = 'localhost'
 
 
-gemeenteCoordinates = pd.read_csv('/home/vives/project-experience/gemeenteCoordinaten.csv')
-gemeenteCodes = pd.read_csv('/home/vives/project-experience/gemeenteCodes.csv')
+gemeenteCoordinates = pd.DataFrame(pd.read_json('./TreeHealthDetectionAI/Code/src/zipcode-belgium.json'))
 
 server = Flask(__name__)
 app = dash.Dash(__name__, server=server)
@@ -38,12 +37,12 @@ def serve_cir_tile(z, x, y):
 def serve_tile(z, x, y, tiles_dir):
     inverted_y = y
     max_y_values = {
-        10: 682, 11: 1364, 12: 2729,
+        9: 341, 10: 682, 11: 1364, 12: 2729,
         13: 5459, 14: 10918, 15: 21837,
         16: 43674, 17: 87348
     }
     min_y_values = {
-        10: 681, 11: 1363, 12: 2726,
+        9: 340, 10: 681, 11: 1363, 12: 2726,
         13: 5452, 14: 10905, 15: 21810,
         16: 43620, 17: 87241
     }
@@ -63,8 +62,9 @@ def serve_tile(z, x, y, tiles_dir):
 # Layout
 app.layout = html.Div(children=[
     dcc.Dropdown(
-    [gemeenteCodes.iloc[i, 0] for i in range(len(gemeenteCodes))],
-    placeholder="Selecteer een gemeente",
+    [{'label': f"{row['city']} - {row['zip']}", 'value': row['city']}
+                 for _, row in gemeenteCoordinates.iterrows()],
+    placeholder="Selecteer een gemeente", id="dropdown"
     ),
     dl.Map([
         dl.LayersControl(
@@ -80,7 +80,7 @@ app.layout = html.Div(children=[
             ],
             id='lc'
         )
-    ], center=[-51.2, 3.6], zoom=17, style={"width": "100%", "height": "800px"}),
+    ], center=[-51.15, 3.21], zoom=17, style={"width": "100%", "height": "800px"}, id="map"),
     html.Div(children=[
         html.Div(id="label")
     ], className="info")
@@ -93,5 +93,16 @@ def update_label(click_lat_lng):
         return "-"
     return "{:.3f} {}".format(0.0, "units")
 
+# Callback to go to selected city
+@app.callback(
+    Output("map", "viewport"),
+    Input("dropdown", "value"),
+    prevent_initial_call=True
+)
+def update_map(selected_city):
+    city_row = gemeenteCoordinates[gemeenteCoordinates['city'] == selected_city]
+    lat, lng = city_row['lat'].values[0], city_row['lng'].values[0]
+
+    return dict(center=(-lat,lng),zoom =15, transition="flyTo")
 if __name__ == '__main__':
     app.run_server(port=TC_PORT, host=TC_HOST)
