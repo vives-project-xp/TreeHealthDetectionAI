@@ -62,17 +62,14 @@ def project_to_geojson(tiles_path, pred_fold=None, output_fold=None, multi_class
 
         tifpath = Path(tiles_path) / Path(filename.name.replace("Prediction_", "")).with_suffix(".tif")
         
-        # Controleer en wijs CRS toe indien ontbrekend
         assign_crs_if_missing(tifpath)
 
-        # Valideer het .tif-bestand op een geldige CRS
         try:
             crs = validate_crs(tifpath)
         except ValueError as e:
             print(e)
-            continue  # Als de CRS ontbreekt, sla het bestand dan over
+            continue  
 
-        # Open het .tif-bestand en lees het CRS
         with rasterio.open(tifpath) as data:
             epsg = CRS.from_string(data.crs.wkt).to_epsg()
             raster_transform = data.transform
@@ -105,7 +102,6 @@ def project_to_geojson(tiles_path, pred_fold=None, output_fold=None, multi_class
             crown_coords_array = np.array(crown_coords).reshape(-1, 2)
 
             try:
-                # Verkrijg x (longitude) en y (latitude) coördinaten
                 x_coords, y_coords = rasterio.transform.xy(
                     transform=raster_transform,
                     rows=crown_coords_array[:, 1],
@@ -113,13 +109,10 @@ def project_to_geojson(tiles_path, pred_fold=None, output_fold=None, multi_class
                 )
             except Exception as e:
                 print(f"Fout bij coördinatenomzetting voor {filename}: {e}")
-                continue  # Als er een fout is bij de omzetting, sla dit dan over
+                continue 
 
-            # Extra rotatie van de coördinaten door ze 90 graden naar rechts te draaien
-            moved_coords = list(zip(y_coords, x_coords))  # Omdraaien van x_coords en y_coords (rotatie)
-            
-            # Extra 90 graden rotatie toevoegen: de x- en y-coördinaten omdraaien
-            # Dit kan een visuele rotatie zijn van de afbeelding (vooral als het een kaart betreft)
+            moved_coords = list(zip(y_coords, x_coords))  
+        
             moved_coords_rotated = [(y, -x) for x, y in moved_coords]
 
             feature = {
