@@ -1,6 +1,9 @@
 ## Tussentijd
-![Firt try](./img/First.png)
-![Firt try](./img/First2.png)
+<div style="display: flex; gap: 10px;">
+    <img src="./img/First.png" alt="First try" width="300px">
+    <img src="./img/First2.png" alt="Second try" width="300px">
+</div>
+
 
 ## Confidence_score
 ![Confidence_score](./img/ConfScore.png)
