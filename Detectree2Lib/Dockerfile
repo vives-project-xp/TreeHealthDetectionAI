@@ -13,6 +13,9 @@ RUN pip install torch torchvision torchaudio --index-url https://download.pytorc
     pip install opencv-python && \
     pip install gdal==3.6.2 && \
     pip install git+https://github.com/PatBall1/detectree2.git
+    
+# Installeer Pillow en andere afhankelijkheden    
+RUN pip install --no-cache-dir Pillow
 
 # Download het modelbestand
 RUN wget https://zenodo.org/records/10522461/files/230103_randresize_full.pth
