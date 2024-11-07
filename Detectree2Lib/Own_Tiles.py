@@ -137,10 +137,9 @@ def project_to_geojson(tiles_path, pred_fold=None, output_fold=None, multi_class
 
 def main():
     tiles_path = "/data/Own_Tiles/" 
-    result_path = "/data/Own_Tiles/result/" 
     check_directory_exists_and_list_files(tiles_path)
 
-    trained_model = "./230103_randresize_full.pth"
+    trained_model = "./urban_trees_Cambridge_20230630.pth"
     cfg = setup_cfg(update_model=trained_model)
     cfg.MODEL.DEVICE='cpu'
 
