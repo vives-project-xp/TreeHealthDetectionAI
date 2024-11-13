@@ -2,9 +2,11 @@
 
 ## Het team
 
-- Robbe De Wispelaere
-- Colin Bossuyt
-- Niels Denoo
+[<img src="https://github.com/RobbeDeW.png" alt="" width="25" style="margin-bottom:-6px;"> Robbe De Wispelaere](https://github.com/RobbeDeW)
+
+[<img src="https://github.com/BossuytC.png" alt="" width="25" style="margin-bottom:-6px;"> Colin Bossuyt](https://github.com/BossuytC)
+
+[<img src="https://github.com/NielsDenoo.png" alt="" width="25" style="margin-bottom:-6px;"> Niels Denoo](https://github.com/NielsDenoo)
 
 ## Beschrijving van project
 
