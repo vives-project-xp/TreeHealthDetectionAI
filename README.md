@@ -23,6 +23,9 @@ Met deze tiles kunnen we de AI trainen en ook een interactief dashboard maken.
 
 Het dashboard ontwikkelen we in python met behulp van Dash en Dash-Leaflet. Het zal ook meerdere kaarten bevatten voor RGB foto's, CIR foto's en tot slot een kaart die de resultaten van de AI toont. Verder zal het ook statistieken tonen over de bomen.
 
+## Mappenstructuur
+- ![test](Detectree2Lib/README.md):
+
 ## Dataset
 
 Link naar de dataset die we gaan gebruiken voor de AI te trainen en voor het dashboard.
