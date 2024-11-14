@@ -27,7 +27,9 @@ Na de detectie van de bomen controleren we de infraroodkleur op de locaties waar
 Voor de visualisatie ontwikkelen we een interactief dashboard in Python met de Dash- en Dash-Leaflet-bibliotheken. Dit dashboard zal verschillende kaartlagen bevatten, waaronder RGB-foto’s, CIR (Color Infrared) beelden, en een kaart die de resultaten van het model toont. Daarnaast biedt het dashboard statistieken over de gezondheid van de bomen. Het doel is een gebruiksvriendelijke en interactieve interface te creëren waarmee iedereen eenvoudig kan werken.
 
 ## Mappenstructuur
-- [Detectree2Lib](Detectree2Lib/): Alle info over hoe we de library toepassen op ons project. 
+- [Dashboard](Dashboard/): Alle informatie over hoe ons dashboard werkt. 
+- [Detectree2Lib](Detectree2Lib/): Alle informatie over hoe we de library toepassen op ons project. 
+- [docs](docs/): Alle informatie over het proces en de documentatie
 
 ## Dataset
 
