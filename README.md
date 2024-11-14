@@ -10,16 +10,15 @@
 
 ## Beschrijving van project
 
-Dit is de opdracht die we kregen voor dit project.
+### Dit is hoe wij het project zien en welke stappen hiervoor nodig zijn:
 
 - **Dataverzameling**: Zoek de nodige luchtfoto's en infraroodkaarten van Vlaanderen. Deze zijn beschikbaar via online bronnen, maar ook bij VIVES-collega's in Roeselare.
-- **Dataset opbouw**: Annoteer een groot aantal bomen om een gelabelde dataset op te
-bouwen. Dit proces kan deels geautomatiseerd worden met bestaande modellen, zoals 'Segment Anything'. Onderzoek ook bestaande labeling tools om het annotatieproces te versnellen.
-- **Modelontwikkeling**: Pas een voorgetraind model toe dat bomen herkent. Dit model wordt gebruikt om luchtfoto’s te analyseren en te bepalen of een boom gezond is of tekenen van afsterven vertoont.
+- **Dataset toepassen**: Onderzoek hoe we de online beschikbare dataset kunnen gebruiken in ons project. Kunnen we de bomen in de dataset detecteren en analyseren?
+- **Model toepassen**: Pas een voorgetraind model toe dat bomen herkent. Dit model wordt gebruikt om luchtfoto’s te analyseren en te bepalen of een boom gezond is of tekenen van afsterven vertoont.
 - **Dashboard**: Ontwikkel een uitgebreid dashboard met Plotly Dash, waarin gebruikers de resultaten kunnen bekijken en navigeren. Zorg voor een interactieve en gebruiksvriendelijke interface.
 - **Deployment op mini-PC**: Zorg dat het volledige systeem offline werkt en stand-alone kan draaien op een mini-PC met een Linux-besturingssysteem, geschikt voor gebruik tijdens open dagen en evenementen
 
-## Concept
+### Concept
 
 We passen een bestaand model toe dat, op basis van RGB luchtfoto’s en een infraroodlaag, bomen kan detecteren en hun gezondheid kan beoordelen. De dataset die we hiervoor gebruiken, bestaat uit grote JP2-bestanden die niet direct bruikbaar zijn. Daarom converteren we deze bestanden naar kleinere PNG-tiles met behulp van de gdal2tiles-bibliotheek. Dit proces verdeelt de grote afbeeldingen in meerdere kleine tiles die het model kan gebruiken om bomen te detecteren.
 
