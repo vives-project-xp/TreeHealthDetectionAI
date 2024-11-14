@@ -1,0 +1,9 @@
+#Folders
+/__pycache__
+/Own_Tiles
+/Test
+
+#Files
+urban_trees_Cambridge_20230630.pth
+230103_randresize_full.pth
+220723_withParacouUAV.pth

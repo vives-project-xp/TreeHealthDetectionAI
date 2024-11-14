@@ -17,15 +17,8 @@ DEFAULT_TILE = '/home/vives/project-experience/tree_pattern.avif'
 TC_PORT = 8050
 TC_HOST = 'localhost'
 
-#variables
-gemeenteCoordinates = pd.DataFrame(pd.read_json('./TreeHealthDetectionAI/Code/assets/zipcode-belgium.json'))
-min_lat = -50.67
-min_lng = 2.53
-max_lat = -51.5087
-max_lng = 5.92
-#not correct
-lat_correction = -0.0442
-lon_correction = 0.088
+
+gemeenteCoordinates = pd.DataFrame(pd.read_json('./TreeHealthDetectionAI/Code/src/zipcode-belgium.json'))
 
 server = Flask(__name__)
 app = dash.Dash(__name__, server=server)
@@ -73,29 +66,24 @@ app.layout = html.Div(children=[
                  for _, row in gemeenteCoordinates.iterrows()],
     placeholder="Selecteer een gemeente", id="dropdown"
     ),
-            dl.Map([
-                dl.LayersControl(
-                    [
-                        dl.BaseLayer(
-                            dl.TileLayer(url='http://localhost:8050/tiles/rgb/{z}/{x}/{y}.png', attribution='RGB Layer'),
-                            name='RGB', checked=True
-                        ),
-                        dl.BaseLayer(
-                            dl.TileLayer(url='http://localhost:8050/tiles/cir/{z}/{x}/{y}.png', attribution='CIR Layer'),
-                            name='CIR'
-                        ),
-                    ],
-                    id='lc'
-                )
-            ], 
-            center=[-51.2147083, 3.2073611], zoom=17, style={"width": "100%", "height": "800px"}, 
-            id="map", 
-            maxZoom=17, 
-            minZoom=9, 
-            maxBounds=[[min_lat, min_lng], [max_lat, max_lng]]),
-            html.Div(children=[
-            html.Div(id="label")
-            ], className="info")
+    dl.Map([
+        dl.LayersControl(
+            [
+                dl.BaseLayer(
+                    dl.TileLayer(url='http://localhost:8050/tiles/rgb/{z}/{x}/{y}.png', attribution='RGB Layer'),
+                    name='RGB', checked=True
+                ),
+                dl.BaseLayer(
+                    dl.TileLayer(url='http://localhost:8050/tiles/cir/{z}/{x}/{y}.png', attribution='CIR Layer'),
+                    name='CIR'
+                ),
+            ],
+            id='lc'
+        )
+    ], center=[-51.15, 3.21], zoom=17, style={"width": "100%", "height": "800px"}, id="map"),
+    html.Div(children=[
+        html.Div(id="label")
+    ], className="info")
 ], style={"display": "grid", "width": "100%", "height": "100vh"})
 
 # Callbacks
@@ -114,7 +102,7 @@ def update_label(click_lat_lng):
 def update_map(selected_city):
     city_row = gemeenteCoordinates[gemeenteCoordinates['city'] == selected_city]
     lat, lng = city_row['lat'].values[0], city_row['lng'].values[0]
-    return dict(center=(-lat,lng),zoom =15, transition="flyTo")
 
+    return dict(center=(-lat,lng),zoom =15, transition="flyTo")
 if __name__ == '__main__':
     app.run_server(port=TC_PORT, host=TC_HOST)
