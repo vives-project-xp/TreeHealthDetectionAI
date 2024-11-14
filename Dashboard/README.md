@@ -1,30 +1,30 @@
 # Code
 
-## Requirements
+## Vereisten
 
-U will need to have python on your pc and the following libraries:
-- Dash 
-- Dash-Leaflet 
-- flask
+Je hebt Python op je pc nodig en de volgende bibliotheken:
+- Dash
+- Dash-Leaflet
+- Flask
 
-The easiest way to install them is by doin the following command in the terminal.
+De eenvoudigste manier om ze te installeren is door de volgende opdracht in de terminal uit te voeren.
 ```
 $pip install dash dash-leaflet flask
 ```
 
-## Installation
+## Installatie
 
-U can install the code by cloning the repository.
+Je kunt de code installeren door de repository te clonen.
 
-## Usage
+## Gebruik
 
-To use the code u have to first get a dataset. The dataset we used is from [Vlaanderen.be](https://download.vlaanderen.be/product/9531). After u have the dataset u have to convert them into tiles using the command.
+Om de code te gebruiken, moet je eerst een dataset verkrijgen. De dataset die we hebben gebruikt komt van [Vlaanderen.be](https://download.vlaanderen.be/product/9531). Nadat je de dataset hebt gedownload, moet je deze omzetten naar tegels (tiles) met de volgende opdracht.
 
 ```
 $gdal2tiles.py input.jp2 output_folder
 ```
 
-The output folder should have look similair to this.
+De uitvoermap (output folder) zou er ongeveer als volgt uit moeten zien:
 
 ```
 tiles/
@@ -32,5 +32,4 @@ tiles/
     cir/
 ```
 
-U should put the infrared tiles in the CIR folder and the rgb tiles in the RGB folder.
-After that u run multipleLayers.py
+Je zou de infrarode tegels (infrared tiles) in de CIR-map moeten plaatsen en de RGB- tegels in de RGB-map. Daarna kun je `multipleLayers.py` uitvoeren.
