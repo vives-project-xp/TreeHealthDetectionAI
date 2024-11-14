@@ -9,7 +9,7 @@ Je hebt Python op je pc nodig en de volgende bibliotheken:
 
 De eenvoudigste manier om ze te installeren is door de volgende opdracht in de terminal uit te voeren.
 ```
-$pip install dash dash-leaflet flask
+$pip install dash dash-leaflet flask pandas
 ```
 
 ## Installatie
@@ -32,4 +32,5 @@ tiles/
     cir/
 ```
 
+Controleer ook zelf of de paths kloppen.
 Je zou de infrarode tegels (infrared tiles) in de CIR-map moeten plaatsen en de RGB- tegels in de RGB-map. Daarna kun je `multipleLayers.py` uitvoeren.

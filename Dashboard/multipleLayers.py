@@ -20,6 +20,14 @@ TC_HOST = 'localhost'
 
 gemeenteCoordinates = pd.DataFrame(pd.read_json('./TreeHealthDetectionAI/Dashboard/assets/zipcode-belgium.json'))
 
+geojson_path = './TreeHealthDetectionAI/Prediction_87318.geojson'
+
+try:
+    with open(geojson_path, 'r') as f:
+        geojson_data = json.load(f)
+except FileNotFoundError:
+    print(f"GeoJSON file not found at {geojson_path}")
+    exit()
 server = Flask(__name__)
 app = dash.Dash(__name__, server=server)
 
@@ -76,7 +84,7 @@ app.layout = html.Div(children=[
                 dl.BaseLayer(
                     dl.TileLayer(url='http://localhost:8050/tiles/cir/{z}/{x}/{y}.png', attribution='CIR Layer'),
                     name='CIR'
-                ),
+                )
             ],
             id='lc'
         )
@@ -87,7 +95,7 @@ app.layout = html.Div(children=[
     id="map", 
     bounceAtZoomLimits=True,
     maxZoom=17,
-    minZoom=9,
+    minZoom=9
     ),
     html.Div(children=[
         html.Div(id="label")
@@ -111,6 +119,6 @@ def update_map(selected_city):
     city_row = gemeenteCoordinates[gemeenteCoordinates['city'] == selected_city]
     lat, lng = city_row['lat'].values[0], city_row['lng'].values[0]
 
-    return dict(center=(lat-102.3512,lng),zoom =15, transition="flyTo")
+    return dict(center=(lat-102.351,lng),zoom =15, transition="flyTo")
 if __name__ == '__main__':
     app.run_server(port=TC_PORT, host=TC_HOST)

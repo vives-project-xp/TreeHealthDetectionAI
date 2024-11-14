@@ -2,6 +2,8 @@
 /__pycache__
 /Own_Tiles
 /Test
+/venv
+/train_outputs
 
 #Files
 urban_trees_Cambridge_20230630.pth

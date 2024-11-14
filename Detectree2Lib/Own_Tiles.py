@@ -11,8 +11,10 @@ from detectron2.engine import DefaultPredictor
 import pycocotools.mask as mask_util
 from pngTotif import convert_png_to_tif
 
+# Change the folders to the correct paths of the files u want to analyze
 input_folder = "./Own_Tiles"
 output_folder = "./Own_Tiles"
+tiles_path = "/data/Own_Tiles" 
 
 convert_png_to_tif(input_folder, output_folder)
 
@@ -136,7 +138,7 @@ def project_to_geojson(tiles_path, pred_fold=None, output_fold=None, multi_class
 
 
 def main():
-    tiles_path = "/data/Own_Tiles/" 
+
     check_directory_exists_and_list_files(tiles_path)
 
     trained_model = "./urban_trees_Cambridge_20230630.pth"
