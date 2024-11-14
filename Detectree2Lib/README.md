@@ -1,3 +1,6 @@
+# Detectree2Lib
+Hoe kun je deze map zelf gebruiken klik [Hier](docs/README.md) voor meer info.
+
 ## 230103_randresize_full.pth
 <div style="display: flex; gap: 10px;">
     <img src="./img/First.png" alt="first model" width="300px">
