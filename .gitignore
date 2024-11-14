@@ -1,1 +1,4 @@
 *.jp2
+
+/DetectCollor
+/.venv
