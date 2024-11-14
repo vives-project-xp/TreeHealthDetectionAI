@@ -18,7 +18,7 @@ TC_PORT = 8050
 TC_HOST = 'localhost'
 
 
-gemeenteCoordinates = pd.DataFrame(pd.read_json('./TreeHealthDetectionAI/Code/src/zipcode-belgium.json'))
+gemeenteCoordinates = pd.DataFrame(pd.read_json('./TreeHealthDetectionAI/Dashboard/assets/zipcode-belgium.json'))
 
 server = Flask(__name__)
 app = dash.Dash(__name__, server=server)
