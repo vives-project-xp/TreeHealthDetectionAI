@@ -147,7 +147,7 @@ def main():
 
     project_to_geojson(tiles_path, tiles_path + "predictions/", tiles_path + "predictions_geo/")
 
-    print("Tis gelukt")
+    os.rmdir('/data/train_outputs')
 
 if __name__ == "__main__":
     main()
