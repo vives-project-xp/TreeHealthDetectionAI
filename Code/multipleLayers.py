@@ -80,7 +80,15 @@ app.layout = html.Div(children=[
             ],
             id='lc'
         )
-    ], center=[-51.15, 3.21], zoom=17, style={"width": "100%", "height": "800px"}, id="map"),
+    ], 
+    center=[-51.15, 3.21], 
+    zoom=17, 
+    style={"width": "100%", "height": "800px"}, 
+    id="map", 
+    bounceAtZoomLimits=True,
+    maxZoom=17,
+    minZoom=9,
+    ),
     html.Div(children=[
         html.Div(id="label")
     ], className="info")
@@ -103,6 +111,6 @@ def update_map(selected_city):
     city_row = gemeenteCoordinates[gemeenteCoordinates['city'] == selected_city]
     lat, lng = city_row['lat'].values[0], city_row['lng'].values[0]
 
-    return dict(center=(-lat,lng),zoom =15, transition="flyTo")
+    return dict(center=(lat-102.3512,lng),zoom =15, transition="flyTo")
 if __name__ == '__main__':
     app.run_server(port=TC_PORT, host=TC_HOST)
