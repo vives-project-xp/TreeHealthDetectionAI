@@ -1,7 +1,10 @@
 *.jp2
 
 /DetectCollor
-/.venv
+
+# Ignore virtual environments
+venv/
+.venv/
 
 # Ignore Python cache folders
 __pycache__/
