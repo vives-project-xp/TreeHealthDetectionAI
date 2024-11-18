@@ -2,3 +2,6 @@
 
 /DetectCollor
 /.venv
+
+# Ignore Python cache folders
+__pycache__/
