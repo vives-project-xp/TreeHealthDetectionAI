@@ -34,3 +34,6 @@ tiles/
 
 Controleer ook zelf of de paths kloppen.
 Je zou de infrarode tegels (infrared tiles) in de CIR-map moeten plaatsen en de RGB- tegels in de RGB-map. Daarna kun je `multipleLayers.py` uitvoeren.
+
+
+De tiles kunnen ook gedownload worden van [Kaggle.com](https://kaggle.com/datasets/aee5a2ae97dd59ebb42c70f3fcc3bbfafbba3aab6f5d182c5d81d81d72f3c07d).
