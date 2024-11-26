@@ -1,0 +1,3 @@
+pip install shapely
+pip install rasterio
+pip install pillow
