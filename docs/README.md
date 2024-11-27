@@ -31,3 +31,63 @@ In deze week is er veel aan de documentatie gewerkt om deze beter te maken. Er i
 ### Week 6
 
 In deze week is de searchbar afgewerkt, ook is er vooruitgang gemaakt met het algoritme voor bomen uit foto's te detecteren. Er is wel het problemen gekomen dat coördinaten niet kloppen met die van de kaart. Er is ook gekeken voor meerdere jp2 kaarten aan elkaar te hangen maar we hebben problemen met overlapping van stukken.
+
+## Planning en deadlines
+
+### 26/09
+- [x]  Brainstorm
+- [x]  projectcanvas invullen
+- [x]  readme aanmaken
+
+### 3/10
+
+- [x] Dataset vinden
+- [x] library voor algoritme
+- [x] JP2 bestanden omzetten
+
+### 10/10
+
+- [x] library leren gebruiken
+- [x] Jp2 bestanden omzetten naar png
+- [x] dashboard
+
+### 17/10
+
+- [x] stuk kaart tonen op dashboard (Brugge en omstreek)
+- [x] library leren gebruiken
+
+### 24/10
+
+- [x] Documentatie aanvullen
+- [x] Handleiding searchbar
+- [x] Begin searchbar
+
+### 7/11
+
+- [x] afwerken searchbar (problemen met coördinaten)
+- [ ] Meerdere stukken kaart op dashboard krijgen (stukken overlappen)
+
+### 14/11
+
+- [x] probleem met coordinaten oplossen
+- [x] handleiding detectree2lib gebruiken
+
+### 21/11
+
+### 28/11
+
+### 5/12
+
+- [ ] finaal product
+- [ ] afgewerkte documentatie
+- [ ] afwerken handleidingen installatie en gebruik
+
+### 12/12
+
+- [ ] afgewerkte powerpoint voor presentatie
+- [ ] afgewerkte poster
+- [ ] alles testen
+
+### 19/12
+
+- [ ] presentatie project
