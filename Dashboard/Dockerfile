@@ -9,10 +9,11 @@ RUN pip install -r /requirements.txt
 
 # Copy the tiles
 COPY ./tiles ./tiles
+COPY ./assets ./assets
 
 # Copy the application code
-COPY multipleLayers.py /data/multipleLayers.py
-COPY tree_pattern.avif /data/tree_pattern.avif
+COPY multipleLayers.py /data/
+COPY tree_pattern.avif /data/
 
 # Geef de poort weer waarop de app draait
 EXPOSE 8050
