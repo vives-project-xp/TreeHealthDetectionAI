@@ -28,6 +28,7 @@ Voor de visualisatie ontwikkelen we een interactief dashboard in Python met de D
 
 ## Mappenstructuur
 - [Dashboard](Dashboard/): Alle informatie over hoe ons dashboard werkt. 
+- [DetectCollor](DetectCollor/): Alle info over hoe we ongezond bomen detecteren.
 - [Detectree2Lib](Detectree2Lib/): Alle informatie over hoe we de library toepassen op ons project. 
 - [docs](docs/): Alle informatie over het proces en de documentatie
 
