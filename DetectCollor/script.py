@@ -6,11 +6,11 @@ from rasterio.features import geometry_mask, shapes
 from rasterio.transform import from_bounds
 from PIL import Image
 
-geojson_path = '../Detectree2Lib/Own_Tiles/predictions_geo/Prediction_87259.geojson'  
+geojson_path = '../Detectree2Lib/Own_Tiles/66706/predictions_geo/Prediction_87247.geojson'  
 with open(geojson_path) as f:
     geojson_data = json.load(f)
 
-image_path = 'test.png' 
+image_path = '../Dashboard/tiles/cir/17/66706/87247.png' 
 image = Image.open(image_path)
 image = image.convert("RGB")
 pixels = np.array(image)
