@@ -7,9 +7,7 @@ Dit is nodig om te bekijken welke bomen gezond zijn of niet. Dit doen we aan de 
 
 De **Normalized Difference Vegetation Index (NDVI)** is een maatstaf die wordt gebruikt om de gezondheid van vegetatie te evalueren op basis van satelliet- of luchtfoto's. NDVI maakt gebruik van de reflectie in twee belangrijke spectrale banden: het rode licht (R) en het nabij-infrarode licht (NIR). De formule voor NDVI is:
 
-\[
-\text{NDVI} = \frac{\text{NIR} - \text{R}}{\text{NIR} + \text{R}}
-\]
+![Formule](./img/NDVI.png)
 
 Waarbij:
 - **NIR** de reflectie in het nabij-infrarode spectrum is (meestal band 3),
