@@ -29,18 +29,32 @@ for feature in geojson_data['features']:
         polygon = shape(feature['geometry'])
         mask |= geometry_mask([polygon], out_shape=mask.shape, transform=transform, invert=True)
 
-infrarood = pixels[:, :, 2]  
-rood = pixels[:, :, 0]  
+# Bereken de NDVI
+infrarood = pixels[:, :, 2]  # Infrarood (bijvoorbeeld de derde band)
+rood = pixels[:, :, 0]       # Rood (bijvoorbeeld de eerste band)
 
 denominator = infrarood + rood
-denominator[denominator == 0] = 1e-6  
+denominator[denominator == 0] = 1e-6  # Voorkom deling door nul
 
 ndvi = (infrarood - rood) / denominator
 
+# Drempelwaarde voor gezonde bomen (NDVI > 0.2)
 ndvi_drempel = 0.2  
-
 gezonde_masker = (ndvi > ndvi_drempel) & mask  
 
+# Tel het aantal gezonde pixels
+gezonde_pixels = np.sum(gezonde_masker)
+totaal_pixels = np.sum(mask)
+
+# Bereken het percentage van gezonde bomen
+if totaal_pixels > 0:
+    percentage_gezond = (gezonde_pixels / totaal_pixels) * 100
+else:
+    percentage_gezond = 0
+
+print(f"Percentage gezonde bomen: {percentage_gezond:.2f}%")
+
+# Nu de geometrieën van de gezonde bomen ophalen
 gezonde_geom = []
 for geom, value in shapes(gezonde_masker.astype(np.uint8), mask=gezonde_masker, transform=transform):
     if value == 1:
@@ -49,6 +63,7 @@ for geom, value in shapes(gezonde_masker.astype(np.uint8), mask=gezonde_masker, 
 
 gezonde_union = unary_union(gezonde_geom)
 
+# Maak het output GeoJSON bestand aan
 output_geojson = {
     "type": "FeatureCollection",
     "features": []
