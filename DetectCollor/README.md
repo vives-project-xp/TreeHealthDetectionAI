@@ -18,4 +18,6 @@ Waarbij:
 - **Kale grond of geen vegetatie**: NDVI-waarden tussen **0.0** en **0.2** wijzen vaak op kale grond of gebieden zonder vegetatie.
 - **Water**: NDVI-waarden tussen **-0.3** en **0.1** worden vaak geassocieerd met waterlichamen.
 - **Zieke of dode vegetatie**: NDVI-waarden onder **0.2** kunnen wijzen op ongezonde of dode vegetatie.
+
+Meer info kun je hier vinden: [cropin.com](https://www.cropin.com/blogs/ndvi-normalized-difference-vegetation-index)
  
