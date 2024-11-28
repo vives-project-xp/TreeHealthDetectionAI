@@ -7,11 +7,11 @@ WORKDIR /data
 COPY requirements.txt /requirements.txt
 RUN pip install -r /requirements.txt
 
-# Copy the tiles
+# Copy the tiles and assets
 COPY ./tiles ./tiles
 COPY ./assets ./assets
 
-# Copy the application code
+# Copy the application code and the tree pattern
 COPY multipleLayers.py /data/
 COPY tree_pattern.avif /data/
 
