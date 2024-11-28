@@ -151,10 +151,23 @@ def process_tiles(tiles_path, trained_model, crs="EPSG:4326", multi_class=False)
         pred_dir = os.path.join(directory, out_folder)
         Path(pred_dir).mkdir(parents=True, exist_ok=True)
 
+        # Alternatieve implementatie
+        dataset_dicts = []
+
+        # Zoek naar bestanden afhankelijk van eval
         if eval:
-            dataset_dicts = get_tree_dicts(directory)
+            # Zoek PNG-bestanden in de directory en subdirectories
+            files = Path(directory).rglob("*.png")
         else:
-            dataset_dicts = get_filenames(directory)
+            # Zoek PNG-bestanden alleen in de hoofddirectory
+            files = Path(directory).glob("*.png")
+
+        # Bouw de dataset op
+        for file in files:
+            dataset_dicts.append({"file_name": str(file.resolve())})
+
+        # Debugging: Laat zien wat er in dataset_dicts zit
+        print(f"Dataset dicts: {dataset_dicts}")
 
         total_files = len(dataset_dicts)
 
@@ -169,9 +182,8 @@ def process_tiles(tiles_path, trained_model, crs="EPSG:4326", multi_class=False)
         for i, d in enumerate(dataset_dicts[:num_to_pred], start=1):
             print("----------------------------------------------------------------------------------")
             img_path = d["file_name"]
-            #img_path = img_path - directory
             print(img_path)
-            
+
             # Check if the image exists before trying to load it
             if not os.path.exists(img_path):
                 print(f"Warning: Image file {img_path} not found, skipping.")
