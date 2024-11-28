@@ -1,7 +1,6 @@
 # Kleur detecteren
 
-Dit is nodig om te bekijken welke bomen gezond zijn of niet. Dit doen we aan de hand van de NDVI(Normalized Difference Vegetation Index).
-
+Dit is nodig om te bepalen welke bomen gezond zijn en welke niet. We berekenen de gemiddelde pixelwaarde per gedetecteerde boom en gebruiken deze informatie om te beoordelen of de boom gezond is.
 
 ## NDVI (Normalized Difference Vegetation Index)
 

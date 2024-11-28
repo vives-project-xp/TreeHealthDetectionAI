@@ -1,5 +1,5 @@
 # Detectree2Lib
-Om de Detectree2Lib te gebruiken, moet je verschillende stappen volgen. Deze stappen worden hieronder beschreven.
+Om de Detectree2Lib te gebruiken, moet je verschillende stappen volgen. Deze stappen worden hieronder beschreven. De code die wij hebben geschreven zorgt er voor dat het model kan woren toegepast in verschillene mappen binnen een map.
 
 ## Extra map toevoegen
 Zorg ervoor dat de map **/Own_Tiles** aanwezig is in de **/Detectree2Lib** directory. Als je de naam van deze map wilt veranderen, kun je dit aanpassen in de `result.py` file. Specifiek moet je de `tiles_path`, `output_folder` en `input_folder` variabele aanpassen naar de nieuwe naam. **Dit is de map waar de Tiles moeten komen te staan**.
