@@ -9,7 +9,7 @@ We besluiten dat de [urban_trees_Cambridge_20230630.pth](#urban_trees_cambridge_
 
 
 ### Confidence_score
-![Confidence_score](./img/ConfScore.png)
+[Confidence_score](./img/ConfScore.png)
 
 ## urban_trees_Cambridge_20230630.pth
 <div style="display: flex; gap: 10px;">
