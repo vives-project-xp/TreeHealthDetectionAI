@@ -1,0 +1,4 @@
+dash==2.18.1
+dash-leaflet==1.0.15
+Flask==3.0.3
+pandas==2.2.3

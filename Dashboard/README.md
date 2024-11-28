@@ -6,6 +6,7 @@ Je hebt Python op je pc nodig en de volgende bibliotheken:
 - Dash
 - Dash-Leaflet
 - Flask
+- pandas
 
 De eenvoudigste manier om ze te installeren is door de volgende opdracht in de terminal uit te voeren.
 ```

@@ -35,6 +35,7 @@ In deze week is de searchbar afgewerkt, ook is er vooruitgang gemaakt met het al
 ## Planning en deadlines
 
 ### 26/09
+
 - [x]  Brainstorm
 - [x]  projectcanvas invullen
 - [x]  readme aanmaken
@@ -65,7 +66,7 @@ In deze week is de searchbar afgewerkt, ook is er vooruitgang gemaakt met het al
 ### 7/11
 
 - [x] afwerken searchbar (problemen met coördinaten)
-- [ ] Meerdere stukken kaart op dashboard krijgen (stukken overlappen)
+- [x] Meerdere stukken kaart op dashboard krijgen (stukken overlappen, alleen brugge)
 
 ### 14/11
 
@@ -74,7 +75,15 @@ In deze week is de searchbar afgewerkt, ook is er vooruitgang gemaakt met het al
 
 ### 21/11
 
+- [x] Gezondheid van bomen detecteren
+- [x] code geojson naar png omzetten
+
 ### 28/11
+
+- [ ] Docker voor Dashboard
+- [x] Geojson van gedecteerde bomen naar png
+- [x] Op alle png's bomen detecteren
+- [x] Alle Geojson files naar png omzetten
 
 ### 5/12
 

@@ -9,25 +9,20 @@ import os
 import pandas as pd
 
 # Configuration settings
-# Change the path to the directory of your RGB tiles
-TILES_DIR = '/home/vives/project-experience/tiles/rgb'
-# Change the path to the directory of your CIR tiles
-CIR_TILES_DIR = '/home/vives/project-experience/tiles/cir'
-DEFAULT_TILE = '/home/vives/project-experience/tree_pattern.avif'
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# Configuration settings
+# Change the path to the directory of your RGB tiles (use the full path)
+TILES_DIR = os.path.join(BASE_DIR, 'tiles/rgb')
+# Change the path to the directory of your CIR tiles (use the full path)
+CIR_TILES_DIR = os.path.join(BASE_DIR, 'tiles/cir')
+DEFAULT_TILE = os.path.join(BASE_DIR, 'tree_pattern.avif')
 TC_PORT = 8050
-TC_HOST = 'localhost'
+TC_HOST = '0.0.0.0'
 
 
-gemeenteCoordinates = pd.DataFrame(pd.read_json('./TreeHealthDetectionAI/Dashboard/assets/zipcode-belgium.json'))
+gemeenteCoordinates = pd.DataFrame(pd.read_json(os.path.join(BASE_DIR, 'assets/zipcode-belgium.json')))
 
-geojson_path = './TreeHealthDetectionAI/Prediction_87318.geojson'
-
-try:
-    with open(geojson_path, 'r') as f:
-        geojson_data = json.load(f)
-except FileNotFoundError:
-    print(f"GeoJSON file not found at {geojson_path}")
-    exit()
 server = Flask(__name__)
 app = dash.Dash(__name__, server=server)
 
@@ -121,4 +116,4 @@ def update_map(selected_city):
 
     return dict(center=(lat-102.351,lng),zoom =15, transition="flyTo")
 if __name__ == '__main__':
-    app.run_server(port=TC_PORT, host=TC_HOST)
+    app.run_server(port=TC_PORT, host=TC_HOST, debug=True)

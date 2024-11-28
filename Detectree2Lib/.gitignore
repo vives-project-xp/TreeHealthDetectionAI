@@ -1,6 +1,8 @@
 #Folders
+/__pycache__
 /Own_Tiles
 /Test
+/venv
 /train_outputs
 
 #Files
