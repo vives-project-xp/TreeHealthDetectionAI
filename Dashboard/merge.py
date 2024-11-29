@@ -3,8 +3,8 @@ import json
 from PIL import Image, ImageDraw
 
 # Define the input and output base folders
-input_base_folder = '/home/vives/Desktop/test_tiles/test-geojsons'
-output_base_folder = '/home/vives/Desktop/test_tiles/treedetection'
+input_base_folder = '../Detectree2Lib/Own_Tiles/'
+output_base_folder = './tiles/Processed_Tiles/'
 
 # Function to convert geo-coordinates to pixel coordinates
 def geo_to_pixel(lon, lat, img_width, img_height):
@@ -80,7 +80,7 @@ for root, dirs, files in os.walk(input_base_folder):
                 for image_file in image_files:
                     image_path = os.path.join(root, image_file)
                     geojson_path = os.path.join(geojson_folder, geojson_file)
-                    output_image_path = os.path.join(output_folder, f"{base_name}_with_polygons_and_lines.png")
+                    output_image_path = os.path.join(output_folder, f"{base_name}.png")
 
                     # Process the image and overlay the polygons/lines
                     process_image(image_path, geojson_path, output_image_path)

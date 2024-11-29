@@ -16,6 +16,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 TILES_DIR = os.path.join(BASE_DIR, 'tiles/rgb')
 # Change the path to the directory of your CIR tiles (use the full path)
 CIR_TILES_DIR = os.path.join(BASE_DIR, 'tiles/cir')
+TREE_DETECT_DIR = os.path.join(BASE_DIR, 'tiles/Processed_Tiles')
 DEFAULT_TILE = os.path.join(BASE_DIR, 'tree_pattern.avif')
 TC_PORT = 8050
 TC_HOST = '0.0.0.0'
@@ -35,6 +36,11 @@ def serve_rgb_tile(z, x, y):
 @server.route('/tiles/cir/<int:z>/<int:x>/<int:y>.png')
 def serve_cir_tile(z, x, y):
     return serve_tile(z, x, y, CIR_TILES_DIR)
+
+# Route to tree detection tiles
+@server.route('/tiles/Processed_Tiles/<int:z>/<int:x>/<int:y>.png')
+def serve_detected_tile(z, x, y):
+    return serve_tile(z, x, y, TREE_DETECT_DIR)
 
 # Correcting tiles layout
 def serve_tile(z, x, y, tiles_dir):
@@ -79,6 +85,10 @@ app.layout = html.Div(children=[
                 dl.BaseLayer(
                     dl.TileLayer(url='http://localhost:8050/tiles/cir/{z}/{x}/{y}.png', attribution='CIR Layer'),
                     name='CIR'
+                ),
+                dl.BaseLayer(  
+                    dl.TileLayer(url='http://localhost:8050/tiles/Processed_Tiles/{z}/{x}/{y}.png', attribution='Tree Detection Layer'),
+                    name='Tree Detection'
                 )
             ],
             id='lc'
@@ -115,5 +125,9 @@ def update_map(selected_city):
     lat, lng = city_row['lat'].values[0], city_row['lng'].values[0]
 
     return dict(center=(lat-102.351,lng),zoom =15, transition="flyTo")
+
+
+    
+    
 if __name__ == '__main__':
     app.run_server(port=TC_PORT, host=TC_HOST, debug=True)

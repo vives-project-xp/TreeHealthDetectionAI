@@ -4,6 +4,7 @@
 /Test
 /venv
 /train_outputs
+/Processed_Tiles
 
 #Files
 urban_trees_Cambridge_20230630.pth
