@@ -24,7 +24,7 @@ Hiermee zou de website aan het runnen zijn en ga je naar http://0.0.0.0:8050 voo
 
 ## Tiles Brugge dataset
 
-De tiles kunnen gedownload worden via deze link: [Kaggle.com](https://www.kaggle.com/datasets/robbedewispelaere/treedetection). Dit zijn de tiles voor Brugge.
+De tiles kunnen gedownload worden via deze link: [Kaggle.com](https://www.kaggle.com/datasets/robbedewispelaere/treedetection). Dit zijn de tiles voor Brugge, deze staan in de juiste mappen en moet gewoon aan de code toegevoegd worden.
 
 ## Andere dataset gebruiken
 

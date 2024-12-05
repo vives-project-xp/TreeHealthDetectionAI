@@ -32,6 +32,20 @@ In deze week is er veel aan de documentatie gewerkt om deze beter te maken. Er i
 
 In deze week is de searchbar afgewerkt, ook is er vooruitgang gemaakt met het algoritme voor bomen uit foto's te detecteren. Er is wel het problemen gekomen dat coördinaten niet kloppen met die van de kaart. Er is ook gekeken voor meerdere jp2 kaarten aan elkaar te hangen maar we hebben problemen met overlapping van stukken.
 
+### Week 7
+
+In deze week is het probleem met de coördinaten opgelost, dit is gebeurd door er een waarde van -102.3512 aan de latitude toe te voegen. Verder is het gelukt om de detectree2lib library te gebruiken en is er een handleiding voor gemaakt.
+
+### Week 8
+
+In deze week is het gelukt om de gezondheid van de bomen in Brugge en omstreek te detecteren. Ook is er gevonden om de geojson bestanden, die we als resultaat krijgen van het detecteren van bomen, om te zetten naar png om die zo in het dashboard te tonen.
+
+### Week 9
+
+In deze week is er op alle png's gedetecteerd naar bomen. Daarna zijn ook alle geojson bestanden omgezet naar png voor een nieuwe layer in het dashboard. Er is ook een dockerfile met handleiding gemaakt  voor het dashboard.
+
+### Week 10
+
 ## Planning en deadlines
 
 ### 26/09
@@ -80,7 +94,7 @@ In deze week is de searchbar afgewerkt, ook is er vooruitgang gemaakt met het al
 
 ### 28/11
 
-- [ ] Docker voor Dashboard
+- [x] Docker voor Dashboard
 - [x] Geojson van gedecteerde bomen naar png
 - [x] Op alle png's bomen detecteren
 - [x] Alle Geojson files naar png omzetten
@@ -94,7 +108,7 @@ In deze week is de searchbar afgewerkt, ook is er vooruitgang gemaakt met het al
 ### 12/12
 
 - [ ] afgewerkte powerpoint voor presentatie
-- [ ] afgewerkte poster
+- [x] afgewerkte poster
 - [ ] alles testen
 
 ### 19/12
