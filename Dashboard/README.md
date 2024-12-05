@@ -24,7 +24,7 @@ Hiermee zou de website aan het runnen zijn en ga je naar http://0.0.0.0:8050 voo
 
 ## Tiles Brugge dataset
 
-De tiles kunnen gedownload worden via deze link: [Kaggle.com](https://kaggle.com/datasets/aee5a2ae97dd59ebb42c70f3fcc3bbfafbba3aab6f5d182c5d81d81d72f3c07d). Dit zijn de tiles voor Brugge.
+De tiles kunnen gedownload worden via deze link: [Kaggle.com](https://www.kaggle.com/datasets/robbedewispelaere/treedetection). Dit zijn de tiles voor Brugge.
 
 ## Andere dataset gebruiken
 
@@ -48,3 +48,5 @@ Je zou de infrarode tegels (infrared tiles) in de CIR-map moeten plaatsen en de 
 ## Samenvoegen van Geojsons en png
 
 Via het script merge.py is het mogelijk om de laatste laag van de tileset te combineren met de corresponderende geojsons.
+
+
