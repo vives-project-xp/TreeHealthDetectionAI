@@ -123,7 +123,7 @@ app.layout = html.Div(children=[
         ]),
 
         # Tab for the bar chart
-        dcc.Tab(label="Bar Chart", children=[
+        dcc.Tab(label="Data", children=[
             html.Div(children=[
                 dcc.Graph(id='random-bar-chart')
             ], style={"height": "300px", "width": "100%"})
