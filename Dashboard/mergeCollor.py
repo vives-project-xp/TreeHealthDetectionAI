@@ -13,6 +13,14 @@ def geo_to_pixel(lon, lat, img_width, img_height):
     y_pixel = (1 - (lat - min_latitude) / (max_latitude - min_latitude)) * img_height
     return x_pixel, y_pixel
 
+def get_color_based_on_ndvi(ndvi):
+    if ndvi < 0.33:
+        return (255, 0, 0)  
+    elif ndvi < 0.66:
+        return (255, 165, 0)  
+    else:
+        return (0, 255, 0) 
+
 def process_image(image_path, geojson_path, output_image_path):
     img = Image.open(image_path)
     img_width, img_height = img.size
@@ -24,23 +32,26 @@ def process_image(image_path, geojson_path, output_image_path):
 
     for feature in geojson_data['features']:
         geometry = feature['geometry']
-        
+        ndvi = feature['properties'].get('ndvi', 0) 
+
+        color = get_color_based_on_ndvi(ndvi)
+
         if geometry['type'] == 'Point':
             lon, lat = geometry['coordinates']
             x, y = geo_to_pixel(lon, lat, img_width, img_height)
             radius = 2
             bbox = (x - radius, y - radius, x + radius, y + radius)
-            draw.ellipse(bbox, outline="red", fill=None)
+            draw.ellipse(bbox, outline=color, fill=color)
 
         elif geometry['type'] == 'LineString':
             coordinates = geometry['coordinates']
             pixel_coords = [geo_to_pixel(lon, lat, img_width, img_height) for lon, lat in coordinates]
-            draw.line(pixel_coords, fill="red", width=1)
+            draw.line(pixel_coords, fill=color, width=2)
 
         elif geometry['type'] == 'Polygon':
             for ring in geometry['coordinates']:
                 pixel_coords = [geo_to_pixel(lon, lat, img_width, img_height) for lon, lat in ring]
-                draw.line(pixel_coords + [pixel_coords[0]], fill="red", width=1)
+                draw.line(pixel_coords + [pixel_coords[0]], fill=color, width=2)
 
     img.save(output_image_path)
     print(f"Afbeelding opgeslagen met polygonen en lijnen op: {output_image_path}")

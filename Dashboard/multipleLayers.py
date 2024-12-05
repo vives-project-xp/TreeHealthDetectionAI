@@ -7,6 +7,7 @@ from dash.dependencies import Output, Input
 from flask import Flask, send_from_directory
 import os
 import pandas as pd
+import plotly.graph_objects as go  # Voor het genereren van de willekeurige staafgrafiek
 
 # Configuration settings
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -116,6 +117,10 @@ app.layout = html.Div(children=[
     maxZoom=17,
     minZoom=9
     ),
+    # De willekeurige staafgrafiek wordt hier toegevoegd
+    html.Div(children=[
+        dcc.Graph(id='random-bar-chart')
+    ], style={"height": "300px", "width": "100%"}),
     html.Div(children=[
         html.Div(id="label")
     ], className="info")
@@ -149,6 +154,24 @@ def update_zoom_level(active_layer):
         return 17
     else:
         return 15  # Default zoom for other layers
+
+# Callback voor de willekeurige staafgrafiek
+@app.callback(
+    Output('random-bar-chart', 'figure'),
+    Input('dropdown', 'value')
+)
+def update_random_bar_chart(selected_city):
+    # Willekeurige waarden genereren voor de staafgrafiek
+    import random
+    random_values = [random.randint(1, 100) for _ in range(5)]  # 5 willekeurige waarden tussen 1 en 100
+
+    # Maak de staafgrafiek
+    fig = go.Figure(
+        data=[go.Bar(x=[f"Item {i+1}" for i in range(5)], y=random_values, name='Random Data')],
+        layout=go.Layout(title="Willekeurige Staafgrafiek")
+    )
+    
+    return fig
 
 if __name__ == '__main__':
     app.run_server(port=TC_PORT, host=TC_HOST, debug=True)
