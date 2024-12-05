@@ -6,6 +6,7 @@ Dit is nodig om te bepalen welke bomen gezond zijn en welke niet. We berekenen d
 In deze map staat een bestan genaamd [script.py](./script.py). Dit bestand is nodig om de NDVI-waarde toe te voegen aan een nieuw GeoJSON-bestand. Voor elke polygoon (boom) wordt de gemiddelde pixelwaarde berekend, die vervolgens wordt geschaald op basis van de NDVI-waarde. Deze geschaalde waarde wordt toegevoegd aan het nieuwe GeoJSON-bestand, zodat deze weergegeven kan worden op het dashboard.
 
 Voorbeeld van een geosjon bestand waar je nu de NDVI-waarde ziet:
+
 ![Geosjonfile](./img/Geosjon.png)
 
 ## NDVI (Normalized Difference Vegetation Index)
