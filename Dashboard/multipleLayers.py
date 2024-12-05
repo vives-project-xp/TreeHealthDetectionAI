@@ -8,11 +8,10 @@ from flask import Flask, send_from_directory
 import os
 import pandas as pd
 import plotly.graph_objects as go  # For generating random bar chart
+from data import collect_all_ndvi_values, calculate_ndvi_intervals  # Importeer de functies uit data.py
 
 # Configuration settings
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-
-# Configuration settings
 TILES_DIR = os.path.join(BASE_DIR, 'tiles/rgb')
 CIR_TILES_DIR = os.path.join(BASE_DIR, 'tiles/cir')
 TREE_DETECT_DIR = os.path.join(BASE_DIR, 'tiles/Processed_Tiles')
@@ -86,8 +85,10 @@ app.layout = html.Div(children=[
         dcc.Tab(label="Map", children=[
             dcc.Dropdown(
                 [{'label': f"{row['city']} - {row['zip']}", 'value': row['city']}
-                 for _, row in gemeenteCoordinates.iterrows()],
-                placeholder="Selecteer een gemeente", id="dropdown"
+                for _, row in gemeenteCoordinates.iterrows()],
+                placeholder="Selecteer een gemeente", 
+                id="dropdown",
+                style={"margin": "20px 0"}  # Adds margin above and below the dropdown
             ),
             dl.Map([
                 dl.LayersControl(
@@ -159,7 +160,7 @@ def update_map(selected_city):
     prevent_initial_call=True
 )
 def update_zoom_level(active_layer):
-    if active_layer == 'Tree Detection':
+    if active_layer == 'Tree Detection':    
         return 17
     else:
         return 15  # Default zoom for other layers
@@ -170,14 +171,21 @@ def update_zoom_level(active_layer):
     Input('dropdown', 'value')
 )
 def update_random_bar_chart(selected_city):
-    # Willekeurige waarden genereren voor de staafgrafiek
-    import random
-    random_values = [random.randint(1, 100) for _ in range(5)]  # 5 willekeurige waarden tussen 1 en 100
+    # Haal alle NDVI-waarden op
+    geojson_base_folder = '../Detectree2Lib/Own_Tiles/'  # Pas het pad aan naar je eigen map
+    all_ndvi_values = collect_all_ndvi_values(geojson_base_folder)
+
+    # Bereken de NDVI-percentages
+    ndvi_percentages = calculate_ndvi_intervals(all_ndvi_values)
 
     # Maak de staafgrafiek
     fig = go.Figure(
-        data=[go.Bar(x=[f"Item {i+1}" for i in range(5)], y=random_values, name='Random Data')],
-        layout=go.Layout(title="Willekeurige Staafgrafiek")
+        data=[go.Bar(
+            x=list(ndvi_percentages.keys()), 
+            y=list(ndvi_percentages.values()), 
+            name='NDVI Percentages'
+        )],
+        layout=go.Layout(title="NDVI Percentage per Interval")
     )
     
     return fig
