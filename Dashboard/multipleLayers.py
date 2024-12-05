@@ -102,7 +102,7 @@ app.layout = html.Div(children=[
             ], 
             center=[-51.15, 3.21], 
             zoom=17, 
-            style={"width": "100%", "height": "800px"}, 
+            style={"width": "100%", "height": "900px"}, 
             id="map", 
             bounceAtZoomLimits=True,
             maxZoom=17,
@@ -125,6 +125,7 @@ app.layout = html.Div(children=[
         html.Div(id="label")
     ], className="info")
 ], style={"display": "grid", "width": "100%", "height": "100vh"})
+
 
 @app.callback(Output("label", "children"), [Input("map", 'click_lat_lng')])
 def update_label(click_lat_lng):
