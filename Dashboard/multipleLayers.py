@@ -7,7 +7,7 @@ from dash.dependencies import Output, Input
 from flask import Flask, send_from_directory
 import os
 import pandas as pd
-import plotly.graph_objects as go  # Voor het genereren van de willekeurige staafgrafiek
+import plotly.graph_objects as go  # For generating random bar chart
 
 # Configuration settings
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -81,46 +81,55 @@ def serve_tile(z, x, y, primary_dir, alternative_dir=None):
 
 # Layout
 app.layout = html.Div(children=[
-    dcc.Dropdown(
-    [{'label': f"{row['city']} - {row['zip']}", 'value': row['city']}
+    dcc.Tabs([
+        # Tab for the map
+        dcc.Tab(label="Map", children=[
+            dcc.Dropdown(
+                [{'label': f"{row['city']} - {row['zip']}", 'value': row['city']}
                  for _, row in gemeenteCoordinates.iterrows()],
-    placeholder="Selecteer een gemeente", id="dropdown"
-    ),
-    dl.Map([
-        dl.LayersControl(
-            [
-                dl.BaseLayer(
-                    dl.TileLayer(url='http://localhost:8050/tiles/rgb/{z}/{x}/{y}.png', attribution='RGB Layer'),
-                    name='RGB', checked=True
-                ),
-                dl.BaseLayer(
-                    dl.TileLayer(url='http://localhost:8050/tiles/cir/{z}/{x}/{y}.png', attribution='CIR Layer'),
-                    name='CIR'
-                ),
-                dl.BaseLayer(  
-                    dl.TileLayer(url='http://localhost:8050/tiles/Processed_Tiles/{z}/{x}/{y}.png', attribution='Tree Detection Layer'),
-                    name='Tree Detection'
-                ),
-                dl.BaseLayer(
-                    dl.TileLayer(url='http://localhost:8050/tiles/Collor_Tiles/{z}/{x}/{y}.png', attribution='Collor Tiles Layer'),
-                    name='Ongezonde bomen'
+                placeholder="Selecteer een gemeente", id="dropdown"
+            ),
+            dl.Map([
+                dl.LayersControl(
+                    [
+                        dl.BaseLayer(
+                            dl.TileLayer(url='http://localhost:8050/tiles/rgb/{z}/{x}/{y}.png', attribution='RGB Layer'),
+                            name='RGB', checked=True
+                        ),
+                        dl.BaseLayer(
+                            dl.TileLayer(url='http://localhost:8050/tiles/cir/{z}/{x}/{y}.png', attribution='CIR Layer'),
+                            name='CIR'
+                        ),
+                        dl.BaseLayer(  
+                            dl.TileLayer(url='http://localhost:8050/tiles/Processed_Tiles/{z}/{x}/{y}.png', attribution='Tree Detection Layer'),
+                            name='Tree Detection'
+                        ),
+                        dl.BaseLayer(
+                            dl.TileLayer(url='http://localhost:8050/tiles/Collor_Tiles/{z}/{x}/{y}.png', attribution='Collor Tiles Layer'),
+                            name='Ongezonde bomen'
+                        )
+                    ],
+                    id='lc'
                 )
-            ],
-            id='lc'
-        )
-    ], 
-    center=[-51.15, 3.21], 
-    zoom=17, 
-    style={"width": "100%", "height": "800px"}, 
-    id="map", 
-    bounceAtZoomLimits=True,
-    maxZoom=17,
-    minZoom=9
-    ),
-    # De willekeurige staafgrafiek wordt hier toegevoegd
-    html.Div(children=[
-        dcc.Graph(id='random-bar-chart')
-    ], style={"height": "300px", "width": "100%"}),
+            ], 
+            center=[-51.15, 3.21], 
+            zoom=17, 
+            style={"width": "100%", "height": "800px"}, 
+            id="map", 
+            bounceAtZoomLimits=True,
+            maxZoom=17,
+            minZoom=9
+            ),
+        ]),
+
+        # Tab for the bar chart
+        dcc.Tab(label="Bar Chart", children=[
+            html.Div(children=[
+                dcc.Graph(id='random-bar-chart')
+            ], style={"height": "300px", "width": "100%"})
+        ])
+    ]), 
+    
     html.Div(children=[
         html.Div(id="label")
     ], className="info")
