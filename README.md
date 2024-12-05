@@ -1,9 +1,6 @@
 # TreeHealthDetectionAI
 
-<div style="display: flex; gap: 10px;">
-    <img src="./img/Webpagina_data.png" alt="WebpaginaData" width="300px">
-    <img src="./img/Webpagina_Map.png" alt="WebpaginaMap" width="300px">
-</div>
+![fotoWebpagina](./img/affiche.png)
 
 ## Het team
 
