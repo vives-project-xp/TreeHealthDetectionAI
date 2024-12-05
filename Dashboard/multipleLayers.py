@@ -12,38 +12,41 @@ import pandas as pd
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Configuration settings
-# Change the path to the directory of your RGB tiles (use the full path)
 TILES_DIR = os.path.join(BASE_DIR, 'tiles/rgb')
-# Change the path to the directory of your CIR tiles (use the full path)
 CIR_TILES_DIR = os.path.join(BASE_DIR, 'tiles/cir')
 TREE_DETECT_DIR = os.path.join(BASE_DIR, 'tiles/Processed_Tiles')
+COLLOR_TILES_DIR = os.path.join(BASE_DIR, 'tiles/Collor_Tiles')  # Path for Collor Tiles
 DEFAULT_TILE = os.path.join(BASE_DIR, 'tree_pattern.avif')
 TC_PORT = 8050
 TC_HOST = '0.0.0.0'
-
 
 gemeenteCoordinates = pd.DataFrame(pd.read_json(os.path.join(BASE_DIR, 'assets/zipcode-belgium.json')))
 
 server = Flask(__name__)
 app = dash.Dash(__name__, server=server)
 
-# Route to RGB tiles
+# Route to RGB tiles, first check RGB and then CIR
 @server.route('/tiles/rgb/<int:z>/<int:x>/<int:y>.png')
 def serve_rgb_tile(z, x, y):
-    return serve_tile(z, x, y, TILES_DIR)
+    return serve_tile(z, x, y, TILES_DIR, CIR_TILES_DIR)
 
-# Route to CIR tiles
+# Route to CIR tiles, first check CIR and then RGB
 @server.route('/tiles/cir/<int:z>/<int:x>/<int:y>.png')
 def serve_cir_tile(z, x, y):
-    return serve_tile(z, x, y, CIR_TILES_DIR)
+    return serve_tile(z, x, y, CIR_TILES_DIR, TILES_DIR)
 
-# Route to tree detection tiles
+# Route to tree detection tiles, first check Processed_Tiles, then RGB
 @server.route('/tiles/Processed_Tiles/<int:z>/<int:x>/<int:y>.png')
 def serve_detected_tile(z, x, y):
-    return serve_tile(z, x, y, TREE_DETECT_DIR)
+    return serve_tile(z, x, y, TREE_DETECT_DIR, TILES_DIR)
+
+# Route for Collor tiles, first check Collor_Tiles, then CIR
+@server.route('/tiles/Collor_Tiles/<int:z>/<int:x>/<int:y>.png')
+def serve_collor_tile(z, x, y):
+    return serve_tile(z, x, y, COLLOR_TILES_DIR, CIR_TILES_DIR)
 
 # Correcting tiles layout
-def serve_tile(z, x, y, tiles_dir):
+def serve_tile(z, x, y, primary_dir, alternative_dir=None):
     inverted_y = y
     max_y_values = {
         9: 341, 10: 682, 11: 1364, 12: 2729,
@@ -61,12 +64,19 @@ def serve_tile(z, x, y, tiles_dir):
         min_y = min_y_values[z]
         inverted_y = max_y - (y - min_y)
 
-    tile_path = os.path.join(tiles_dir, f"{z}/{x}/{inverted_y}.png")
-
+    # Try first in the primary directory
+    tile_path = os.path.join(primary_dir, f"{z}/{x}/{inverted_y}.png")
     if os.path.exists(tile_path):
-        return send_from_directory(tiles_dir, f"{z}/{x}/{inverted_y}.png")
-    else:
-        return send_from_directory(os.path.dirname(DEFAULT_TILE), os.path.basename(DEFAULT_TILE))
+        return send_from_directory(primary_dir, f"{z}/{x}/{inverted_y}.png")
+
+    # If not found, try the alternative directory
+    if alternative_dir:
+        tile_path = os.path.join(alternative_dir, f"{z}/{x}/{inverted_y}.png")
+        if os.path.exists(tile_path):
+            return send_from_directory(alternative_dir, f"{z}/{x}/{inverted_y}.png")
+
+    # If not found in either directory, return the default tile
+    return send_from_directory(os.path.dirname(DEFAULT_TILE), os.path.basename(DEFAULT_TILE))
 
 # Layout
 app.layout = html.Div(children=[
@@ -89,6 +99,10 @@ app.layout = html.Div(children=[
                 dl.BaseLayer(  
                     dl.TileLayer(url='http://localhost:8050/tiles/Processed_Tiles/{z}/{x}/{y}.png', attribution='Tree Detection Layer'),
                     name='Tree Detection'
+                ),
+                dl.BaseLayer(
+                    dl.TileLayer(url='http://localhost:8050/tiles/Collor_Tiles/{z}/{x}/{y}.png', attribution='Collor Tiles Layer'),
+                    name='Ongezonde bomen'
                 )
             ],
             id='lc'
@@ -114,7 +128,6 @@ def update_label(click_lat_lng):
         return "-"
     return "{:.3f} {}".format(0.0, "units")
 
-# Callback to go to selected city
 @app.callback(
     Output("map", "viewport"),
     Input("dropdown", "value"),
@@ -124,10 +137,18 @@ def update_map(selected_city):
     city_row = gemeenteCoordinates[gemeenteCoordinates['city'] == selected_city]
     lat, lng = city_row['lat'].values[0], city_row['lng'].values[0]
 
-    return dict(center=(lat-102.351,lng),zoom =15, transition="flyTo")
+    return dict(center=(lat-102.351,lng), zoom=15, transition="flyTo")
 
+@app.callback(
+    Output("map", "zoom"),
+    Input("lc", "activeBaseLayer"),
+    prevent_initial_call=True
+)
+def update_zoom_level(active_layer):
+    if active_layer == 'Tree Detection':
+        return 17
+    else:
+        return 15  # Default zoom for other layers
 
-    
-    
 if __name__ == '__main__':
     app.run_server(port=TC_PORT, host=TC_HOST, debug=True)

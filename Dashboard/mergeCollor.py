@@ -2,8 +2,9 @@ import os
 import json
 from PIL import Image, ImageDraw
 
-input_base_folder = '../Detectree2Lib/Own_Tiles/'
-output_base_folder = './tiles/Processed_Tiles/'
+input_image_base_folder = './tiles/cir/17/'
+input_geojson_base_folder = '../Detectree2Lib/Own_Tiles/'
+output_base_folder = './tiles/Collor_Tiles/17/'
 
 def geo_to_pixel(lon, lat, img_width, img_height):
     min_longitude, max_longitude = 0, 256
@@ -42,21 +43,21 @@ def process_image(image_path, geojson_path, output_image_path):
                 draw.line(pixel_coords + [pixel_coords[0]], fill="red", width=1)
 
     img.save(output_image_path)
-    print(f"Image saved with polygons and lines at: {output_image_path}")
+    print(f"Afbeelding opgeslagen met polygonen en lijnen op: {output_image_path}")
 
-for root, dirs, files in os.walk(input_base_folder):
-    if 'predictions_geo' in dirs:
-        geojson_folder = os.path.join(root, 'predictions_geo')
-        
-        relative_folder_path = os.path.relpath(root, input_base_folder)
-        output_folder = os.path.join(output_base_folder, relative_folder_path)
-
+for root, dirs, files in os.walk(input_image_base_folder):
+    folder_name = os.path.basename(root)
+    
+    geojson_folder = os.path.join(input_geojson_base_folder, folder_name, 'collor_predictions')
+    
+    if os.path.exists(geojson_folder):
+        output_folder = os.path.join(output_base_folder, folder_name)
         if not os.path.exists(output_folder):
             os.makedirs(output_folder)
 
         for geojson_file in os.listdir(geojson_folder):
             if geojson_file.endswith('.geojson'):
-                base_name = geojson_file.replace('Prediction_', '').replace('.geojson', '')
+                base_name = geojson_file.replace('collor_', '').replace('.geojson', '')
 
                 image_files = [f for f in os.listdir(root) if f.endswith('.png') and base_name in f]
 
@@ -67,4 +68,4 @@ for root, dirs, files in os.walk(input_base_folder):
 
                     process_image(image_path, geojson_path, output_image_path)
 
-                    print(f"Processed {image_file} with GeoJSON {geojson_file} and saved to {output_image_path}")
+                    print(f"Verwerkt {image_file} met GeoJSON {geojson_file} en opgeslagen in {output_image_path}")
