@@ -44,6 +44,6 @@ all_ndvi_values = collect_all_ndvi_values(geojson_base_folder)
 
 ndvi_percentages = calculate_ndvi_intervals(all_ndvi_values)
 
-print("NDVI-percentages:")
-for interval, percentage in ndvi_percentages.items():
-    print(f"  {interval}: {percentage:.2f}%")
+
+
+

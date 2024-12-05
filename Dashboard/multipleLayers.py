@@ -1,13 +1,11 @@
-import json
+import os
 import dash
-from dash import html
-from dash import dcc
+from dash import dcc, html
 import dash_leaflet as dl
 from dash.dependencies import Output, Input
 from flask import Flask, send_from_directory
-import os
 import pandas as pd
-import plotly.graph_objects as go  # For generating random bar chart
+import plotly.graph_objects as go  # For generating bar chart with color scale
 from data import collect_all_ndvi_values, calculate_ndvi_intervals  # Importeer de functies uit data.py
 
 # Configuration settings
@@ -85,7 +83,7 @@ app.layout = html.Div(children=[
         dcc.Tab(label="Map", children=[
             dcc.Dropdown(
                 [{'label': f"{row['city']} - {row['zip']}", 'value': row['city']}
-                for _, row in gemeenteCoordinates.iterrows()],
+                 for _, row in gemeenteCoordinates.iterrows()],
                 placeholder="Selecteer een gemeente", 
                 id="dropdown",
                 style={"margin": "20px 0"}  # Adds margin above and below the dropdown
@@ -126,7 +124,12 @@ app.layout = html.Div(children=[
         # Tab for the bar chart
         dcc.Tab(label="Data", children=[
             html.Div(children=[
-                dcc.Graph(id='random-bar-chart')
+                # Add loading indicator for the graph
+                dcc.Loading(
+                    id="loading-indicator",
+                    type="circle",  # Change to other types if desired (e.g., "dot", "default")
+                    children=[dcc.Graph(id='random-bar-chart')]
+                )
             ], style={"height": "300px", "width": "100%"})
         ])
     ]), 
@@ -178,17 +181,35 @@ def update_random_bar_chart(selected_city):
     # Bereken de NDVI-percentages
     ndvi_percentages = calculate_ndvi_intervals(all_ndvi_values)
 
-    # Maak de staafgrafiek
+    # Kleurenschaal voor de staven
+    colorscale = 'RdYlGn'  # Kleurenschaal van rood naar groen
+
+    # Normaliseer de NDVI-percentages voor de kleuren (waardes van 0 tot 1)
+    max_value = max(ndvi_percentages.values()) if ndvi_percentages else 1
+    min_value = min(ndvi_percentages.values()) if ndvi_percentages else 0
+
+    # Maak de staafgrafiek met kleurverloop
     fig = go.Figure(
         data=[go.Bar(
             x=list(ndvi_percentages.keys()), 
             y=list(ndvi_percentages.values()), 
-            name='NDVI Percentages'
+            name='NDVI Percentages',
+            marker=dict(
+                color=list(ndvi_percentages.values()),  # Kleur op basis van de percentages
+                colorscale=colorscale,  # Kleurenschaal
+                colorbar=dict(title="Percentage"),
+                showscale=True  # Toon de schaal aan de zijkant
+            )
         )],
-        layout=go.Layout(title="NDVI Percentage per Interval")
+        layout=go.Layout(
+            title="NDVI Percentage per Interval",
+            xaxis=dict(title='NDVI Interval'),
+            yaxis=dict(title='Percentage'),
+        )
     )
     
     return fig
+
 
 if __name__ == '__main__':
     app.run_server(port=TC_PORT, host=TC_HOST, debug=True)
