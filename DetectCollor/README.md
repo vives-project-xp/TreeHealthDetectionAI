@@ -2,6 +2,12 @@
 
 Dit is nodig om te bepalen welke bomen gezond zijn en welke niet. We berekenen de gemiddelde pixelwaarde per gedetecteerde boom en gebruiken deze informatie om te beoordelen of de boom gezond is.
 
+## Hoe toepassen
+In deze map staat een bestan genaamd [script.py](./script.py). Dit bestand is nodig om de NDVI-waarde toe te voegen aan een nieuw GeoJSON-bestand. Voor elke polygoon (boom) wordt de gemiddelde pixelwaarde berekend, die vervolgens wordt geschaald op basis van de NDVI-waarde. Deze geschaalde waarde wordt toegevoegd aan het nieuwe GeoJSON-bestand, zodat deze weergegeven kan worden op het dashboard.
+
+Voorbeeld van een geosjon bestand waar je nu de NDVI-waarde ziet:
+![Geosjonfile](./img/Geosjon.png)
+
 ## NDVI (Normalized Difference Vegetation Index)
 
 De **Normalized Difference Vegetation Index (NDVI)** is een maatstaf die wordt gebruikt om de gezondheid van vegetatie te evalueren op basis van satelliet- of luchtfoto's. NDVI maakt gebruik van de reflectie in twee belangrijke spectrale banden: het rode licht (R) en het nabij-infrarode licht (NIR). De formule voor NDVI is:
