@@ -36,7 +36,7 @@ Voor de visualisatie ontwikkelen we een interactief dashboard in Python met de D
 
 ## ScriptVolgorde
 
-Dit is de volgorde van hoe je de script moet uitvoeren om dit zelf ook te kunnen doen. In deze mappen staat ook extra uitleg over hoe je die script moet voorbereiden en gebruiken:
+Dit is de volgorde van hoe je de script moet uitvoeren om dit zelf ook te kunnen doen (Als je gewoon onze datasets wilt gebruiken kan dit deze vindt je verder in dit document).  In deze mappen staat ook extra uitleg over hoe je die script's moet voorbereiden en gebruiken:
 
 1) [TreeDetection](./Detectree2Lib/) (result.py).
 2) [NDVI-waarde toekennen](./DetectCollor/) (script.py).
