@@ -36,7 +36,7 @@ Voor de visualisatie ontwikkelen we een interactief dashboard in Python met de D
 
 ## ScriptVolgorde
 
-Dit is de volgorde van hoe je de script moet uitvoeren om dit zelf ook te kunnen doen. In deze mappen staat ook uitleg voor moest dit worden uitgevoerd via docker:
+Dit is de volgorde van hoe je de script moet uitvoeren om dit zelf ook te kunnen doen. In deze mappen staat ook extra uitleg over hoe je die script moet voorbereiden en gebruiken:
 
 1) [TreeDetection](./Detectree2Lib/) (result.py).
 2) [NDVI-waarde toekennen](./DetectCollor/) (script.py).
@@ -48,3 +48,16 @@ Dit is de volgorde van hoe je de script moet uitvoeren om dit zelf ook te kunnen
 
 Link naar de dataset die we gaan gebruiken voor de AI te trainen en voor het dashboard.
 [Vlaanderen.be](https://download.vlaanderen.be/product/9531)
+
+### Tiles Brugge dataset
+
+De tiles kunnen gedownload worden via deze link: [Kaggle.com](https://www.kaggle.com/datasets/robbedewispelaere/treedetection). Dit zijn de tiles voor Brugge, deze staan in de juiste mappen en moet gewoon aan de code toegevoegd worden.
+
+### Andere dataset gebruiken
+
+Als je een andere dataset wil gebruiken of een andere gemeente dan kan je die halen van [Vlaanderen.be](https://download.vlaanderen.be/product/9531). Hier kan je ook de opdeling zien van hoe alle stukken van vlaanderen is opgedeeld. Als je de dataset (het jp2 in de map) gedownload heb ga je deze eerst moet omzetten naar png. Dit doe je door volgende commando.
+
+```
+$gdal2tiles.py input.jp2 output_folder
+```
+In de output_folder zul je verschillende genummerde mappen zien dit zijn de zoom levels wij detecteren de bomen enkel op zoomlevel 17. Dus als je hierop de bomen wilt detecteren ga je in het mapje 17 en kun je de volledige inhoud kopiëren en in de Own_Tiles map zetten in de [Detectree2Lib](./Detectree2Lib/) map.
