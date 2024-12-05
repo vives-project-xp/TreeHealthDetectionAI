@@ -5,15 +5,14 @@ import dash_leaflet as dl
 from dash.dependencies import Output, Input
 from flask import Flask, send_from_directory
 import pandas as pd
-import plotly.graph_objects as go  # For generating bar chart with color scale
-from data import collect_all_ndvi_values, calculate_ndvi_intervals  # Importeer de functies uit data.py
+import plotly.graph_objects as go
+from data import collect_all_ndvi_values, calculate_ndvi_intervals
 
-# Configuration settings
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 TILES_DIR = os.path.join(BASE_DIR, 'tiles/rgb')
 CIR_TILES_DIR = os.path.join(BASE_DIR, 'tiles/cir')
 TREE_DETECT_DIR = os.path.join(BASE_DIR, 'tiles/Processed_Tiles')
-COLLOR_TILES_DIR = os.path.join(BASE_DIR, 'tiles/Collor_Tiles')  # Path for Collor Tiles
+COLLOR_TILES_DIR = os.path.join(BASE_DIR, 'tiles/Collor_Tiles')
 DEFAULT_TILE = os.path.join(BASE_DIR, 'tree_pattern.avif')
 TC_PORT = 8050
 TC_HOST = '0.0.0.0'
@@ -23,27 +22,22 @@ gemeenteCoordinates = pd.DataFrame(pd.read_json(os.path.join(BASE_DIR, 'assets/z
 server = Flask(__name__)
 app = dash.Dash(__name__, server=server)
 
-# Route to RGB tiles, first check RGB and then CIR
 @server.route('/tiles/rgb/<int:z>/<int:x>/<int:y>.png')
 def serve_rgb_tile(z, x, y):
     return serve_tile(z, x, y, TILES_DIR, CIR_TILES_DIR)
 
-# Route to CIR tiles, first check CIR and then RGB
 @server.route('/tiles/cir/<int:z>/<int:x>/<int:y>.png')
 def serve_cir_tile(z, x, y):
     return serve_tile(z, x, y, CIR_TILES_DIR, TILES_DIR)
 
-# Route to tree detection tiles, first check Processed_Tiles, then RGB
 @server.route('/tiles/Processed_Tiles/<int:z>/<int:x>/<int:y>.png')
 def serve_detected_tile(z, x, y):
     return serve_tile(z, x, y, TREE_DETECT_DIR, TILES_DIR)
 
-# Route for Collor tiles, first check Collor_Tiles, then CIR
 @server.route('/tiles/Collor_Tiles/<int:z>/<int:x>/<int:y>.png')
 def serve_collor_tile(z, x, y):
     return serve_tile(z, x, y, COLLOR_TILES_DIR, CIR_TILES_DIR)
 
-# Correcting tiles layout
 def serve_tile(z, x, y, primary_dir, alternative_dir=None):
     inverted_y = y
     max_y_values = {
@@ -62,31 +56,26 @@ def serve_tile(z, x, y, primary_dir, alternative_dir=None):
         min_y = min_y_values[z]
         inverted_y = max_y - (y - min_y)
 
-    # Try first in the primary directory
     tile_path = os.path.join(primary_dir, f"{z}/{x}/{inverted_y}.png")
     if os.path.exists(tile_path):
         return send_from_directory(primary_dir, f"{z}/{x}/{inverted_y}.png")
 
-    # If not found, try the alternative directory
     if alternative_dir:
         tile_path = os.path.join(alternative_dir, f"{z}/{x}/{inverted_y}.png")
         if os.path.exists(tile_path):
             return send_from_directory(alternative_dir, f"{z}/{x}/{inverted_y}.png")
 
-    # If not found in either directory, return the default tile
     return send_from_directory(os.path.dirname(DEFAULT_TILE), os.path.basename(DEFAULT_TILE))
 
-# Layout
 app.layout = html.Div(children=[
     dcc.Tabs([
-        # Tab for the map
         dcc.Tab(label="Map", children=[
             dcc.Dropdown(
                 [{'label': f"{row['city']} - {row['zip']}", 'value': row['city']}
                  for _, row in gemeenteCoordinates.iterrows()],
                 placeholder="Selecteer een gemeente", 
                 id="dropdown",
-                style={"margin": "20px 0"}  # Adds margin above and below the dropdown
+                style={"margin": "20px 0"}
             ),
             dl.Map([
                 dl.LayersControl(
@@ -121,13 +110,11 @@ app.layout = html.Div(children=[
             ),
         ]),
 
-        # Tab for the bar chart
         dcc.Tab(label="Data", children=[
             html.Div(children=[
-                # Add loading indicator for the graph
                 dcc.Loading(
                     id="loading-indicator",
-                    type="circle",  # Change to other types if desired (e.g., "dot", "default")
+                    type="circle",
                     children=[dcc.Graph(id='random-bar-chart')]
                 )
             ], style={"height": "300px", "width": "100%"})
@@ -139,7 +126,6 @@ app.layout = html.Div(children=[
     ], className="info")
 ], style={"display": "grid", "width": "100%", "height": "100vh"})
 
-# Callbacks
 @app.callback(Output("label", "children"), [Input("map", 'click_lat_lng')])
 def update_label(click_lat_lng):
     if not click_lat_lng:
@@ -166,50 +152,65 @@ def update_zoom_level(active_layer):
     if active_layer == 'Tree Detection':    
         return 17
     else:
-        return 15  # Default zoom for other layers
+        return 15
 
-# Callback voor de willekeurige staafgrafiek
 @app.callback(
     Output('random-bar-chart', 'figure'),
     Input('dropdown', 'value')
 )
 def update_random_bar_chart(selected_city):
-    # Haal alle NDVI-waarden op
-    geojson_base_folder = '../Detectree2Lib/Own_Tiles/'  # Pas het pad aan naar je eigen map
+    geojson_base_folder = '../Detectree2Lib/Own_Tiles/'
     all_ndvi_values = collect_all_ndvi_values(geojson_base_folder)
 
-    # Bereken de NDVI-percentages
     ndvi_percentages = calculate_ndvi_intervals(all_ndvi_values)
 
-    # Kleurenschaal voor de staven
-    colorscale = 'RdYlGn'  # Kleurenschaal van rood naar groen
+    ndvi_intervals = list(ndvi_percentages.keys())
+    ndvi_values = list(ndvi_percentages.values())
 
-    # Normaliseer de NDVI-percentages voor de kleuren (waardes van 0 tot 1)
-    max_value = max(ndvi_percentages.values()) if ndvi_percentages else 1
-    min_value = min(ndvi_percentages.values()) if ndvi_percentages else 0
+    interval_values = [(i/10, (i+1)/10) for i in range(10)]
 
-    # Maak de staafgrafiek met kleurverloop
+    mean_ndvi_per_interval = []
+    for i in range(10):
+        interval_start, interval_end = interval_values[i]
+        interval_ndvi_values = [ndvi for ndvi in all_ndvi_values if interval_start <= ndvi < interval_end]
+        if interval_ndvi_values:
+            mean_ndvi_per_interval.append(sum(interval_ndvi_values) / len(interval_ndvi_values))
+        else:
+            mean_ndvi_per_interval.append(0)
+
+    colorscale = 'RdYlGn'
+
+    min_value = min(mean_ndvi_per_interval)
+    max_value = max(mean_ndvi_per_interval)
+
+    normalized_values = [(value - min_value) / (max_value - min_value) for value in mean_ndvi_per_interval]
+
     fig = go.Figure(
         data=[go.Bar(
-            x=list(ndvi_percentages.keys()), 
-            y=list(ndvi_percentages.values()), 
+            x=ndvi_intervals,
+            y=ndvi_values,
             name='NDVI Percentages',
             marker=dict(
-                color=list(ndvi_percentages.values()),  # Kleur op basis van de percentages
-                colorscale=colorscale,  # Kleurenschaal
-                colorbar=dict(title="Percentage"),
-                showscale=True  # Toon de schaal aan de zijkant
+                color=normalized_values,
+                colorscale=colorscale,
+                cmin=0,
+                cmax=1,
+                colorbar=dict(
+                    title="NDVI Value",
+                    tickvals=[0, 0.5, 1],
+                    ticktext=["0 (Rood)", "0.5 (Geel)", "1 (Groen)"],
+                ),
+                showscale=True
             )
         )],
         layout=go.Layout(
             title="NDVI Percentage per Interval",
             xaxis=dict(title='NDVI Interval'),
-            yaxis=dict(title='Percentage'),
+            yaxis=dict(title='Percentage (%)'),
         )
     )
-    
-    return fig
 
+    return fig
 
 if __name__ == '__main__':
     app.run_server(port=TC_PORT, host=TC_HOST, debug=True)
