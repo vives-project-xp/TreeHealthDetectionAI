@@ -24,7 +24,7 @@ Hiermee zou de website aan het runnen zijn en ga je naar http://0.0.0.0:8050 voo
 
 ## Mappen structuur
 
-De uitvoermap (output folder) zou er ongeveer als volgt uit moeten zien:
+De map tiles moet je nog toevoegen. Hierin staan alle .png files voor op de map weer te geven.
 
 ```
 tiles/
@@ -39,6 +39,6 @@ Je zou de infrarode tegels (infrared tiles) in de CIR-map moeten plaatsen en de 
 
 ## Samenvoegen van Geojsons en png
 
-Hiervoor zijn 2 scripts geschreven **merge.py** en **mergCollor.py** puur omdat dit map gewijs anders is. Dit wordt gedaan zodat je de geosjon kunt zien op een png foto. 
+Hiervoor zijn 2 scripts geschreven **merge.py** en **mergeCollor.py** puur omdat dit map gewijs anders is. Dit wordt gedaan zodat je de geosjon kunt zien op een png foto. 
 
 
