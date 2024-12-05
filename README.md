@@ -34,6 +34,16 @@ Voor de visualisatie ontwikkelen we een interactief dashboard in Python met de D
 - [Detectree2Lib](Detectree2Lib/): Alle informatie over hoe we de library toepassen op ons project. 
 - [docs](docs/): Alle informatie over het proces en de documentatie
 
+## ScriptVolgorde
+
+Dit is de volgorde van hoe je de script moet uitvoeren om dit zelf ook te kunnen doen. In deze mappen staat ook uitleg voor moest dit worden uitgevoerd via docker:
+
+1) [TreeDetection](./Detectree2Lib/) (result.py).
+2) [NDVI-waarde toekennen](./DetectCollor/) (script.py).
+3) [samenvoegen boomdetectie](./Dashboard/) (merge.py).
+4) [samenvoegen kleurdetectie](./Dashboard/) (mergeCollor.py).
+5) [dasboard opstarten](./Dashboard/).
+
 ## Dataset
 
 Link naar de dataset die we gaan gebruiken voor de AI te trainen en voor het dashboard.
