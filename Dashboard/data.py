@@ -1,7 +1,7 @@
 import os
 import json
 
-geojson_base_folder = '../Detectree2Lib/Own_Tiles/'
+geojson_base_folder = './Own_Tiles/'
 
 def extract_ndvi_from_geojson(geojson_path):
     with open(geojson_path, 'r') as file:
@@ -43,7 +43,3 @@ def calculate_ndvi_intervals(ndvi_values):
 all_ndvi_values = collect_all_ndvi_values(geojson_base_folder)
 
 ndvi_percentages = calculate_ndvi_intervals(all_ndvi_values)
-
-
-
-

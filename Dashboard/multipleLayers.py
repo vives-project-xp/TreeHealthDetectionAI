@@ -120,6 +120,31 @@ app.layout = html.Div(children=[
             ], style={"height": "300px", "width": "100%"})
         ])
     ]), 
+
+        html.Div(children=[
+        html.Img(
+            src='/assets/ndvi.webp',
+            style={
+                "width": "800px",
+                "height": "auto",
+                "marginTop": "180px",
+                "display": "block",
+                "marginLeft": "auto",
+                "marginRight": "auto",
+            }
+        ),
+        html.P(
+            children=[
+                "More information about ",
+                html.A("NDVI", href="https://www.cropin.com/blogs/ndvi-normalized-difference-vegetation-index", target="_blank")
+            ],
+            style={
+                "textAlign": "center",
+                "marginTop": "10px",
+                "fontSize": "16px",
+            }
+        )
+    ]),
     
     html.Div(children=[
         html.Div(id="label")
@@ -160,7 +185,7 @@ def update_zoom_level(active_layer):
     Input('dropdown', 'value')
 )
 def update_random_bar_chart(selected_city):
-    geojson_base_folder = '../Detectree2Lib/Own_Tiles/'
+    geojson_base_folder = './Own_Tiles/'
     all_ndvi_values = collect_all_ndvi_values(geojson_base_folder)
 
     ndvi_percentages = calculate_ndvi_intervals(all_ndvi_values)
@@ -204,10 +229,16 @@ def update_random_bar_chart(selected_city):
                 showscale=True
             )
         )],
-        layout=go.Layout(
-            title="NDVI Percentage per Interval",
-            xaxis=dict(title='NDVI Interval'),
-            yaxis=dict(title='Percentage (%)'),
+        layout = go.Layout(
+            title={
+                "text": "Normalized Difference Vegetation Index Percentage per Interval",
+                "x": 0.5,
+                "font": {
+                    "size": 24, 
+                },
+            },
+            xaxis=dict(title="NDVI Interval"),
+            yaxis=dict(title="Percentage (%)"),
         )
     )
 

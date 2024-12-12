@@ -13,7 +13,7 @@ Deze worden allemaal geïnstalleerd in de dockerfile
 ## Installatie
 
 Je kunt de code installeren door de repository te clonen.
-Vervolgens ga je in een integrated terminal van dashboard en doe je volgende commando's
+Vervolgens ga je in een terminal van TreeHealthDetectionAI en doe je volgende commando's
 
 ```
 sudo docker build -t dashboard .
@@ -24,7 +24,7 @@ Hiermee zou de website aan het runnen zijn en ga je naar http://0.0.0.0:8050 voo
 
 ## Mappen structuur
 
-De map tiles moet je nog toevoegen. Hierin staan alle .png files voor op de map weer te geven.
+De map tiles moet je nog toevoegen. Hierin staan alle .png files voor op de map weer te geven. Deze map plaats je in de Dashboard folder.
 
 ```
 tiles/

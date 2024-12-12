@@ -1,7 +1,10 @@
 tiles/
+Own_Tiles/
 
 Prediction_87266.geojson
 87266.png
 app.py
 dashboard.py
 test.py
+kaggle.py
+kaggleC.py

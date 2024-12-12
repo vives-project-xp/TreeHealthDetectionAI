@@ -8,7 +8,7 @@ from PIL import Image
 
 base_geojson_path = '../Detectree2Lib/Own_Tiles/'  # Basispath voor Own_Tiles
 base_image_path = '../Dashboard/tiles/cir/17/'  # Basispath voor cir-afbeeldingen
-output_base_path = 'Own_Tiles'  # Basispath voor de output in Own_Tiles
+output_base_path = '../Dashboard/tiles/Collor_Tiles'  # Basispath voor de output in Own_Tiles
 
 # Functie om NDVI te berekenen
 def calculate_average_pixel_value(polygon, pixels, transform):
