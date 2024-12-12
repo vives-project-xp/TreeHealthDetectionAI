@@ -16,6 +16,7 @@ COLLOR_TILES_DIR = os.path.join(BASE_DIR, 'tiles/Collor_Tiles')
 DEFAULT_TILE = os.path.join(BASE_DIR, 'tree_pattern.avif')
 TC_PORT = 8050
 TC_HOST = '0.0.0.0'
+colorscale = ['red', 'orange', 'green']
 
 gemeenteCoordinates = pd.DataFrame(pd.read_json(os.path.join(BASE_DIR, 'assets/zipcode-belgium.json')))
 
@@ -69,46 +70,81 @@ def serve_tile(z, x, y, primary_dir, alternative_dir=None):
 
 app.layout = html.Div(children=[
     dcc.Tabs([
-        dcc.Tab(label="Map", children=[
-            dcc.Dropdown(
-                [{'label': f"{row['city']} - {row['zip']}", 'value': row['city']}
-                 for _, row in gemeenteCoordinates.iterrows()],
-                placeholder="Selecteer een gemeente", 
-                id="dropdown",
-                style={"margin": "20px 0"}
-            ),
-            dl.Map([
-                dl.LayersControl(
+        dcc.Tab(
+            label="Map",
+            children=[
+                dcc.Dropdown(
                     [
-                        dl.BaseLayer(
-                            dl.TileLayer(url='http://localhost:8050/tiles/rgb/{z}/{x}/{y}.png', attribution='RGB Layer'),
-                            name='RGB', checked=True
-                        ),
-                        dl.BaseLayer(
-                            dl.TileLayer(url='http://localhost:8050/tiles/cir/{z}/{x}/{y}.png', attribution='CIR Layer'),
-                            name='CIR'
-                        ),
-                        dl.BaseLayer(  
-                            dl.TileLayer(url='http://localhost:8050/tiles/Processed_Tiles/{z}/{x}/{y}.png', attribution='Tree Detection Layer'),
-                            name='Tree Detection'
-                        ),
-                        dl.BaseLayer(
-                            dl.TileLayer(url='http://localhost:8050/tiles/Collor_Tiles/{z}/{x}/{y}.png', attribution='Collor Tiles Layer'),
-                            name='Ongezonde bomen'
-                        )
+                        {'label': f"{row['city']} - {row['zip']}", 'value': row['city']}
+                        for _, row in gemeenteCoordinates.iterrows()
                     ],
-                    id='lc'
+                    placeholder="Selecteer een gemeente",
+                    id="dropdown",
+                    style={"margin": "20px 0"},
+                ),
+                html.Div(
+                    children=[
+                        dl.Map(
+                            [
+                                dl.LayersControl(
+                                    [
+                                        dl.BaseLayer(
+                                            dl.TileLayer(
+                                                url='http://localhost:8050/tiles/rgb/{z}/{x}/{y}.png',
+                                                attribution='RGB Layer'
+                                            ),
+                                            name='RGB',
+                                            checked=True
+                                        ),
+                                        dl.BaseLayer(
+                                            dl.TileLayer(
+                                                url='http://localhost:8050/tiles/cir/{z}/{x}/{y}.png',
+                                                attribution='CIR Layer'
+                                            ),
+                                            name='CIR'
+                                        ),
+                                        dl.BaseLayer(
+                                            dl.TileLayer(
+                                                url='http://localhost:8050/tiles/Processed_Tiles/{z}/{x}/{y}.png',
+                                                attribution='Tree Detection Layer'
+                                            ),
+                                            name='Tree Detection'
+                                        ),
+                                        dl.BaseLayer(
+                                            dl.TileLayer(
+                                                url='http://localhost:8050/tiles/Collor_Tiles/{z}/{x}/{y}.png',
+                                                attribution='Collor Tiles Layer'
+                                            ),
+                                            name='Ongezonde bomen'
+                                        ),
+                                        dl.Colorbar(
+                                            colorscale=colorscale,
+                                            width=20,
+                                            height=200,
+                                            min=0,
+                                            max=1,
+                                            position="bottomright"
+                                        )
+                                    ],
+                                    id='lc'
+                                )
+                            ],
+                            center=[-51.15, 3.21],
+                            zoom=17,
+                            style={"width": "100%", "height": "800px"},
+                            id="map",
+                            bounceAtZoomLimits=True,
+                            maxZoom=17,
+                            minZoom=9,
+                        ),
+                        dcc.Graph(
+                            id="ndvi-bar-chart",
+                            style={"marginTop": "20px", "height": "400px", "display": "none"}
+                        ),
+                    ]
                 )
-            ], 
-            center=[-51.15, 3.21], 
-            zoom=17, 
-            style={"width": "100%", "height": "900px"}, 
-            id="map", 
-            bounceAtZoomLimits=True,
-            maxZoom=17,
-            minZoom=9
-            ),
-        ]),
+            ]
+        ),
 
         dcc.Tab(label="Data", children=[
             html.Div(children=[
@@ -184,6 +220,7 @@ def update_zoom_level(active_layer):
     Output('random-bar-chart', 'figure'),
     Input('dropdown', 'value')
 )
+
 def update_random_bar_chart(selected_city):
     geojson_base_folder = './Own_Tiles/'
     all_ndvi_values = collect_all_ndvi_values(geojson_base_folder)
@@ -245,4 +282,4 @@ def update_random_bar_chart(selected_city):
     return fig
 
 if __name__ == '__main__':
-    app.run_server(port=TC_PORT, host=TC_HOST, debug=True)
+    app.run_server(port=TC_PORT, host=TC_HOST)
