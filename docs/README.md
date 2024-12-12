@@ -101,15 +101,15 @@ In deze week is er op alle png's gedetecteerd naar bomen. Daarna zijn ook alle g
 
 ### 5/12
 
-- [ ] finaal product
-- [ ] afgewerkte documentatie
-- [ ] afwerken handleidingen installatie en gebruik
+- [x] finaal product
+- [x] afgewerkte documentatie
+- [x] afwerken handleidingen installatie en gebruik
 
 ### 12/12
 
 - [ ] afgewerkte powerpoint voor presentatie
 - [x] afgewerkte poster
-- [ ] alles testen
+- [x] alles testen
 
 ### 19/12
 

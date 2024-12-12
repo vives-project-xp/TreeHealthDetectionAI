@@ -39,6 +39,4 @@ Je zou de infrarode tegels (infrared tiles) in de CIR-map moeten plaatsen en de 
 
 ## Samenvoegen van Geojsons en png
 
-Hiervoor zijn 2 scripts geschreven **merge.py** en **mergeCollor.py** puur omdat dit map gewijs anders is. Dit wordt gedaan zodat je de geosjon kunt zien op een png foto. 
-
-
+Hiervoor zijn 2 scripts geschreven **merge.py** en **mergeCollor.py** puur omdat deze map anders is. Dit wordt gedaan zodat je de geosjon kunt zien op een png foto. 

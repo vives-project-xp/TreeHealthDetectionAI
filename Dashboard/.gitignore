@@ -6,5 +6,4 @@ Prediction_87266.geojson
 app.py
 dashboard.py
 test.py
-kaggle.py
-kaggleC.py
+.gitignore
